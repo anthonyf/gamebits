@@ -13,7 +13,9 @@
 	   #:draw-text
 	   #:get-text-width
 
-	   #:make-color :color-r :color-g :color-b :color-a
+	   #:vector2 #:make-vector2 :vector2-x :vector2-y
+	   
+	   #:color #:make-color :color-r :color-g :color-b :color-a
 	   #:+red+ :+white+ :+blue+
 	   ))
 
@@ -34,6 +36,9 @@
 (defgeneric get-text-width (ctx text font size))
 
 ;; primative types
+
+(defstruct vector2 x y)
+
 (defstruct color r g b a)
 
 (defparameter +red+ (make-color :r 255 :g 0 :b 0 :a 255))
@@ -50,7 +55,7 @@
 
 (defmacro with-drawing ((ctx) &body body)
   "Create a context of TYPE with WIDTH, HEIGHT, and TITLE, begin drawing, execute BODY, and end drawing."
-  `(let ((,ctx ctx))
+  `(progn
      (begin-drawing ,ctx)
      (unwind-protect
 	  (progn ,@body)

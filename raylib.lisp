@@ -1,9 +1,8 @@
 ;; raylib.lisp
 (uiop:define-package #:gamebits/raylib
   (:use #:cl)
-  (:import-from #:gamebits #:make-color :color-r :color-g :color-b :color-a)
-  (:export #:color
-	   #:make-color :color-r :color-g :color-b :color-a
+  (:export #:%color #:r #:g #:b #:a
+	   ;;#:%vector2 #:x #:y
 	   #:init-window
 	   #:close-window
 	   #:set-target-fps
@@ -32,12 +31,9 @@
   (b :uint8)
   (a :uint8))
 
-(defmethod cffi:translate-into-foreign-memory (value color pointer)
-  (cffi:with-foreign-slots ((r g b a) pointer (:struct %color))
-    (setf r (color-r value))
-    (setf g (color-g value))
-    (setf b (color-b value))
-    (setf a (color-a value))))
+;; (cffi:defcstruct %vector2
+;;   (x :float)
+;;   (y :float))
 
 (cffi:defcfun ("InitWindow" init-window) :void
   (width :int)
@@ -63,6 +59,18 @@
   (y :int)
   (font-size :int)
   (color (:struct %color)))
+
+;; void DrawTextPro(Font font, const char *text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, Color tint); // Draw text using Font and pro parameters (rotation)
+
+;; (cffi:defcfun ("DrawTextPro" draw-text-pro) :void
+;;   (font (:pointer :void)) ; Assuming Font is a pointer type
+;;   (text :string)
+;;   (position (:struct %vector2)) ; Assuming Vector2 is defined elsewhere
+;;   (origin (:struct %vector2)) ; Assuming Vector2 is defined elsewhere
+;;   (rotation :float)
+;;   (font-size :float)
+;;   (spacing :float)
+;;   (tint (:struct %color)))
 
 (defstruct color-lisp 
   "A structure representing a color with red, green, blue, and alpha components."

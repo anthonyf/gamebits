@@ -32,3 +32,16 @@
 
 (defmethod window-should-close ((ctx raylib-context))
   (r:window-should-close))
+
+(defmethod cffi:translate-into-foreign-memory (value color pointer)
+  (cffi:with-foreign-slots ((r:r r:g r:b r:a) pointer (:struct r:%color))
+    (setf r:r (color-r value))
+    (setf r:g (color-g value))
+    (setf r:b (color-b value))
+    (setf r:a (color-a value))))
+
+;; (defmethod cffi:translate-into-foreign-memory (value vector2 pointer)
+;;   (cffi:with-foreign-slots ((r:x r:y) pointer (:struct r:%vector2))
+;;     (setf r:x (vector2-x value))
+;;     (setf r:y (vector2-y value))))
+
