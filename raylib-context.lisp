@@ -24,9 +24,6 @@
 (defmethod end-drawing ((ctx raylib-context))
   (r:end-drawing))
 
-(defmethod make-color ((ctx raylib-context) r g b a)
-  (r:make-color :r r :g g :b b :a a))
-
 (defmethod clear-screen ((ctx raylib-context) color)
   (r:clear-background color))
 

@@ -5,12 +5,15 @@
 	   #:window-should-close
 	   #:begin-drawing
 	   #:end-drawing
-	   #:make-color
 	   #:clear-screen
 	   #:draw-line
 	   #:draw-rect
 	   #:draw-text
-	   #:get-text-width))
+	   #:get-text-width
+
+	   #:make-color :color-r :color-g :color-b :color-a
+	   #:+red+ :+white+ :+blue+
+	   ))
 
 (in-package #:gamebits/context)
 
@@ -22,9 +25,15 @@
 ;; drawing functions
 (defgeneric begin-drawing (ctx))
 (defgeneric end-drawing (ctx))
-(defgeneric make-color (ctx r g b a))
 (defgeneric clear-screen (ctx color))
 (defgeneric draw-line (ctx x1 y1 x2 y2 color))
 (defgeneric draw-rect (ctx x y width height color))
 (defgeneric draw-text (ctx x y text color font size))
 (defgeneric get-text-width (ctx text font size))
+
+;; primative types
+(defstruct color r g b a)
+
+(defparameter +red+ (make-color :r 255 :g 0 :b 0 :a 255))
+(defparameter +white+ (make-color :r 255 :g 255 :b 255 :a 255))
+(defparameter +blue+ (make-color :r 0 :g 0 :b 255 :a 255))

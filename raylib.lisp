@@ -1,6 +1,7 @@
 ;; raylib.lisp
 (uiop:define-package #:gamebits/raylib
   (:use #:cl)
+  (:import-from #:gamebits #:make-color :color-r :color-g :color-b :color-a)
   (:export #:color
 	   #:make-color :color-r :color-g :color-b :color-a
 	   #:init-window
@@ -30,8 +31,6 @@
   (g :uint8)
   (b :uint8)
   (a :uint8))
-
-(defstruct color r g b a)
 
 (defmethod cffi:translate-into-foreign-memory (value color pointer)
   (cffi:with-foreign-slots ((r g b a) pointer (:struct %color))
