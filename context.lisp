@@ -2,9 +2,11 @@
   (:use #:cl)
   (:export #:create-context
 	   #:destroy-context
+	   #:with-context
 	   #:window-should-close
 	   #:begin-drawing
 	   #:end-drawing
+	   #:with-drawing
 	   #:clear-screen
 	   #:draw-line
 	   #:draw-rect
@@ -37,3 +39,19 @@
 (defparameter +red+ (make-color :r 255 :g 0 :b 0 :a 255))
 (defparameter +white+ (make-color :r 255 :g 255 :b 255 :a 255))
 (defparameter +blue+ (make-color :r 0 :g 0 :b 255 :a 255))
+
+
+(defmacro with-context ((ctx type width height title) &body body)
+  "Create a context of TYPE with WIDTH, HEIGHT, and TITLE, and execute BODY within that context."
+  `(let ((,ctx (create-context ,type ,width ,height ,title)))
+     (unwind-protect
+	  (progn ,@body)
+       (destroy-context ,ctx))))
+
+(defmacro with-drawing ((ctx) &body body)
+  "Create a context of TYPE with WIDTH, HEIGHT, and TITLE, begin drawing, execute BODY, and end drawing."
+  `(let ((,ctx ctx))
+     (begin-drawing ,ctx)
+     (unwind-protect
+	  (progn ,@body)
+       (end-drawing ,ctx))))
