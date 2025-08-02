@@ -1,8 +1,8 @@
 ;; raylib.lisp
 (uiop:define-package #:gamebits/raylib
   (:use #:cl)
-  (:export #:%color #:r #:g #:b #:a
-	   ;;#:%vector2 #:x #:y
+  (:export #:%color #:%color-tclass #:r #:g #:b #:a
+	   #:%vector2 #:%vector2-tclass #:x #:y
 	   #:init-window
 	   #:close-window
 	   #:set-target-fps
@@ -31,9 +31,9 @@
   (b :uint8)
   (a :uint8))
 
-;; (cffi:defcstruct %vector2
-;;   (x :float)
-;;   (y :float))
+(cffi:defcstruct %vector2
+  (x :float)
+  (y :float))
 
 (cffi:defcfun ("InitWindow" init-window) :void
   (width :int)
