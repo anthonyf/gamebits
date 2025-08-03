@@ -5,6 +5,7 @@
 	   #:%vector2 #:%vector2-tclass #:x #:y
 	   #:font
 	   #:load-font
+	   #:load-font-ex
 	   #:unload-font
 	   #:init-window
 	   #:close-window
@@ -14,7 +15,8 @@
 	   #:end-drawing
 	   #:clear-background
 	   #:draw-text
-	   #:draw-text-pro))
+	   #:draw-text-pro
+	   ))
 
 (in-package #:gamebits/raylib)
 
@@ -164,6 +166,13 @@
 ;; RLAPI Font LoadFont(const char *fileName);
 (cffi:defcfun ("LoadFont" load-font) (:struct %font)
   (file-name :string))
+
+;; Font LoadFontEx(const char *fileName, int fontSize, int *codepoints, int codepointCount); // Load font from file with extended parameters, use NULL for codepoints and 0 for codepointCount to load the default character set, font size is provided in pixels height
+(cffi:defcfun ("LoadFontEx" load-font-ex) (:struct %font)
+  (file-name :string)
+  (font-size :int)
+  (codepoints (:pointer :int)) ; Assuming codepoints is a pointer to an array of integers
+  (codepoint-count :int)) 
 
 ;; RLAPI void UnloadFont(Font font);
 (cffi:defcfun ("UnloadFont" unload-font) :void

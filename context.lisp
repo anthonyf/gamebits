@@ -34,7 +34,7 @@
 (defgeneric end-drawing (ctx))
 (defgeneric clear-screen (ctx color))
 (defgeneric draw-line (ctx x1 y1 x2 y2 color))
-(defgeneric load-font (ctx font-name))
+(defgeneric load-font (ctx font-name size))
 (defgeneric destroy-font (ctx font))
 (defgeneric draw-rect (ctx x y width height color))
 (defgeneric draw-text (ctx x y text color font size))
@@ -50,9 +50,9 @@
 (defparameter +white+ (make-color :r 255 :g 255 :b 255 :a 255))
 (defparameter +blue+ (make-color :r 0 :g 0 :b 255 :a 255))
 
-(defmacro with-font ((ctx font font-name) &body body)
+(defmacro with-font ((ctx font font-name size) &body body)
   "Load FONT in the context and execute BODY with the loaded font."
-  `(let ((,font (load-font ,ctx ,font-name)))
+  `(let ((,font (load-font ,ctx ,font-name ,size)))
 	 (unwind-protect
 	  (progn ,@body)
 	   (destroy-font ,ctx ,font))))

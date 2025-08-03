@@ -37,18 +37,19 @@
 
 (defun run-game (ctx update-func &key (fps 60))
   (let* ((start-time (get-internal-real-time))) ; Initialize start time
+    ;;(livesupport:setup-lisp-repl) 
     (loop :until (c:window-should-close ctx)
 	  :do (setf start-time
 		    (do-fps fps start-time
 		      (lambda (delta-time)
 			(livesupport:continuable
-			  (funcall update-func ctx delta-time))
-			(livesupport:update-repl-link)))))))
+			  (funcall update-func ctx delta-time)
+			  (livesupport:update-repl-link))))))))
 
 
 (defun run-example-1 ()
   (tmt:with-body-in-main-thread ()
     (float-features:with-float-traps-masked t
       (c:with-context (ctx :raylib 800 600 "Example 1")
-	(c:with-font (ctx *default-font* "Roboto/static/Roboto-Regular.ttf")
+	(c:with-font (ctx *default-font* "Roboto/static/Roboto-Regular.ttf" 100)
 	  (run-game ctx 'update))))))

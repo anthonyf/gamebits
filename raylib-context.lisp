@@ -27,11 +27,8 @@
 (defmethod clear-screen ((ctx raylib-context) color)
   (r:clear-background color))
 
-(defmethod load-font ((ctx raylib-context) font-name)
-  (let ((font (r:load-font font-name)))
-    (unless font
-	  (error "Failed to load font: ~a" font-name))
-    font))
+(defmethod load-font ((ctx raylib-context) font-name size)
+  (r:load-font-ex font-name size (cffi:null-pointer) 0))
 
 (defmethod destroy-font ((ctx raylib-context) font)
   (r:unload-font font))
