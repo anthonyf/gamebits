@@ -14,7 +14,7 @@
 	   #:destroy-font
 	   #:with-font
 	   #:draw-text
-	   #:get-text-width
+	   #:measure-text
 
 	   #:vector2 #:make-vector2 :vector2-x :vector2-y
 	   
@@ -36,8 +36,8 @@
 (defgeneric destroy-font (ctx font))
 (defgeneric draw-rect (ctx x y width height color))
 
-(defgeneric draw-text (ctx x y text color font size &optional rotation))
-(defgeneric get-text-width (ctx text font size))
+(defgeneric draw-text (ctx x y text color font size &optional rotation origin))
+(defgeneric measure-text (ctx text font size))
 
 ;; primative types
 

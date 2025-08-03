@@ -34,13 +34,16 @@
 (defmethod destroy-font ((ctx raylib-context) font)
   (r:unload-font font))
 
-(defmethod draw-text ((ctx raylib-context) x y text color font size &optional (rotation 0.0))
+(defmethod draw-text ((ctx raylib-context) x y text color font size &optional (rotation 0.0) origin)
   ;;(r:draw-text text x y size color)
-  (r:draw-text-pro font text
-		   (make-vector2 :x x :y y)
-		   (make-vector2 :x 0 :y 0)
-		   rotation (float size) 1.0 color)
-  )
+  (let ((origin (or origin (make-vector2 :x 0 :y 0))))
+    (r:draw-text-pro font text
+		     (make-vector2 :x x :y y)
+		     origin
+		     rotation (float size) 1.0 color)))
+
+(defmethod measure-text ((ctx raylib-context) text font size)
+  (r:measure-text-ex font text (float size) 1.0))
 
 (defmethod window-should-close ((ctx raylib-context))
   (r:window-should-close))
@@ -63,3 +66,7 @@
     (setf r:x (float (vector2-x value)))
     (setf r:y (float (vector2-y value)))))
 
+(defmethod cffi:translate-from-foreign
+    (pointer (type r:%vector2-tclass))
+  (cffi:with-foreign-slots ((r:x r:y) pointer (:struct r:%vector2))
+    (make-vector2 :x r:x :y r:y)))

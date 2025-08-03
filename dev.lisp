@@ -6,7 +6,8 @@
 (asdf:load-system "slynk")
 (slynk:create-server :port 4005 :dont-close t)
 
-(asdf:load-system :gamebits)
-(asdf:load-system :gamebits/raylib)
+(asdf:load-system :gamebits/examples)
 
-
+(in-package #:cl-user)
+(use-package 'gamebits)
+(use-package 'gamebits/examples)

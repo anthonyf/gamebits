@@ -16,6 +16,7 @@
 	   #:clear-background
 	   #:draw-text
 	   #:draw-text-pro
+	   #:measure-text-ex
 	   ))
 
 (in-package #:gamebits/raylib)
@@ -196,6 +197,13 @@
   (font-size :float)
   (spacing :float)
   (tint (:struct %color)))
+
+;; Vector2 MeasureTextEx(Font font, const char *text, float fontSize, float spacing);    // Measure string size for Font
+(cffi:defcfun ("MeasureTextEx" measure-text-ex) (:struct %vector2)
+  (font (:struct %font))
+  (text :string)
+  (font-size :float)
+  (spacing :float))    
 
 (defstruct color-lisp 
   "A structure representing a color with red, green, blue, and alpha components."
