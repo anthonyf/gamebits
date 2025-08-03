@@ -1,4 +1,5 @@
 alexandria, ghcr.io/ocicl/alexandria@sha256:e433c2e076ed3bcf8641b97b00192680db2201d305efac9293539dee88c7fbf7, alexandria-20240503-8514d8e/alexandria.asd
+asdf-package-system, ghcr.io/ocicl/asdf-package-system@sha256:dfacc260786f4e9e2aa13a797a7b326b58e08ea5db778421a9985b9c67362df1, asdf-package-system-20240503-61776f2/asdf-package-system.asd
 babel, ghcr.io/ocicl/babel@sha256:b505136744213e6b953913780a4b647da40e83818a10f41004846863b5037810, babel-20240606-23c1440/babel.asd
 babel-streams, ghcr.io/ocicl/babel@sha256:b505136744213e6b953913780a4b647da40e83818a10f41004846863b5037810, babel-20240606-23c1440/babel-streams.asd
 babel-tests, ghcr.io/ocicl/babel@sha256:b505136744213e6b953913780a4b647da40e83818a10f41004846863b5037810, babel-20240606-23c1440/babel-tests.asd

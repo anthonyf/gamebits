@@ -27,8 +27,22 @@
 (defmethod clear-screen ((ctx raylib-context) color)
   (r:clear-background color))
 
+(defmethod load-font ((ctx raylib-context) font-name)
+  (let ((font (r:load-font font-name)))
+    (unless font
+	  (error "Failed to load font: ~a" font-name))
+    font))
+
+(defmethod destroy-font ((ctx raylib-context) font)
+  (r:unload-font font))
+
 (defmethod draw-text ((ctx raylib-context) x y text color font size)
-  (r:draw-text text x y size color))
+  ;;(r:draw-text text x y size color)
+  (r:draw-text-pro font text
+		   (make-vector2 :x x :y y)
+		   (make-vector2 :x 0 :y 0)
+		   0.0 (float size) 1.0 color)
+  )
 
 (defmethod window-should-close ((ctx raylib-context))
   (r:window-should-close))
@@ -48,6 +62,6 @@
      (type r:%vector2-tclass)
      pointer)
   (cffi:with-foreign-slots ((r:x r:y) pointer (:struct r:%vector2))
-    (setf r:x (vector2-x value))
-    (setf r:y (vector2-y value))))
+    (setf r:x (float (vector2-x value)))
+    (setf r:y (float (vector2-y value)))))
 

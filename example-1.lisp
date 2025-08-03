@@ -5,14 +5,17 @@
 
 (in-package #:gamebits/example-1)
 
+(defparameter *default-font* nil)
+
 (defun update (ctx delta-time)
   "Update the game state. This function can be expanded to include more complex logic."
+  (declare (ignore delta-time))
   ;; For now, we do nothing here.
   (c:with-drawing (ctx)
     (c:clear-screen ctx c:+white+)	; White background
     (c:draw-text ctx  190 200
 		 "Hello, Gamebits!"
-		 c:+red+ "default" 20)
+		 c:+red+ *default-font* 100)
     ))
 
 (defun do-fps (fps start-time body-fn)
@@ -32,18 +35,20 @@
     ;; Return the updated start time for the next frame
     (get-internal-real-time)))
 
-(defun run-game (width height title update-func &key (fps 60))
+(defun run-game (ctx update-func &key (fps 60))
+  (let* ((start-time (get-internal-real-time))) ; Initialize start time
+    (loop :until (c:window-should-close ctx)
+	  :do (setf start-time
+		    (do-fps fps start-time
+		      (lambda (delta-time)
+			(livesupport:continuable
+			  (funcall update-func ctx delta-time))
+			(livesupport:update-repl-link)))))))
+
+
+(defun run-example-1 ()
   (tmt:with-body-in-main-thread ()
     (float-features:with-float-traps-masked t
-      (c:with-context (ctx :raylib width height title)
-	(let* ((start-time (get-internal-real-time))) ; Initialize start time
-	  (loop :until (c:window-should-close ctx)
-		:do (setf start-time
-			  (do-fps fps start-time
-			    (lambda (delta-time)
-			      (livesupport:continuable
-				(funcall update-func ctx delta-time))
-			      (livesupport:update-repl-link))))))))))
-
-(defun run-example-1 ()  
-  (run-game 800 600 "Example 1"	'update))
+      (c:with-context (ctx :raylib 800 600 "Example 1")
+	(c:with-font (ctx *default-font* "Roboto/static/Roboto-Regular.ttf")
+	  (run-game ctx 'update))))))
