@@ -15,7 +15,7 @@
     (c:clear-screen ctx c:+white+)	; White background
     (c:draw-text ctx  190 200
 		 "Hello, Gamebits!"
-		 c:+red+ *default-font* 100)
+		 c:+blue+ *default-font* 100)
     ))
 
 (defun do-fps (fps start-time body-fn)
