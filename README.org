@@ -1,0 +1,14 @@
+
+
+* Features
+** TODO Draw text
+** Keyboard input
+** Mouse input
+** Joystick input
+** draw rectangle
+** draw line
+** draw pixels
+** Backends
+*** TODO Raylib
+*** Clog
+*** SDL

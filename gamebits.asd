@@ -10,7 +10,8 @@
 	       #:float-features
 	       #:trivial-main-thread
 	       #:livesupport)
-  :components ((:file "macros")
+  :components ((:module "src" :components ((:file "color")))
+	       (:file "macros")
 	       (:file "context")
 	       (:file "gamebits")))
 

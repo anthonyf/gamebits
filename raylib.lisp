@@ -148,7 +148,7 @@
       (setf base-size font-base-size)
       (setf glyph-count font-glyph-count)
       (setf glyph-padding font-glyph-padding)
-      (setf texture (cffi:convert-to-foreign font-texture '(:struct %texture))) ; Assuming texture is a Texture)))
+      (setf texture (cffi:convert-to-foreign font-texture '(:struct %texture)))
       (setf recs font-recs)	  
       (setf glyphs font-glyphs))))
 
@@ -159,7 +159,7 @@
 		   :base-size base-size
 		   :glyph-count glyph-count
 		   :glyph-padding glyph-padding
-		   :texture (cffi:translate-from-foreign texture '(:struct %texture)) ; Assuming texture is a Texture)))
+		   :texture (cffi:translate-from-foreign texture '(:struct %texture))
 		   :recs recs
 		   :glyphs glyphs)))
 

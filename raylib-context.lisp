@@ -1,6 +1,7 @@
 (uiop:define-package #:gamebits/raylib-context
   (:use #:cl)
-  (:mix #:gamebits/context)
+  (:mix #:gamebits/context
+	#:gamebits/color)
   (:local-nicknames (#:r #:gamebits/raylib))
   (:export))
 
@@ -33,12 +34,12 @@
 (defmethod destroy-font ((ctx raylib-context) font)
   (r:unload-font font))
 
-(defmethod draw-text ((ctx raylib-context) x y text color font size)
+(defmethod draw-text ((ctx raylib-context) x y text color font size &optional (rotation 0.0))
   ;;(r:draw-text text x y size color)
   (r:draw-text-pro font text
 		   (make-vector2 :x x :y y)
 		   (make-vector2 :x 0 :y 0)
-		   0.0 (float size) 1.0 color)
+		   rotation (float size) 1.0 color)
   )
 
 (defmethod window-should-close ((ctx raylib-context))
