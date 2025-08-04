@@ -26,13 +26,10 @@
     (get-internal-real-time)))
 
 (defun run-game (ctx update-func &key (fps 60))
-  (let* ((start-time (get-internal-real-time))) ; Initialize start time
-    (loop :until (window-should-close ctx)
-	  :do (progn
-		(livesupport:continuable
-		  (setf start-time
-		     (do-fps fps start-time
-		       (lambda (delta-time)
-			 (funcall update-func ctx delta-time)		      
-			 )))
-		  (livesupport:update-repl-link))))))
+  (loop :for start-time = (get-internal-real-time)
+	  :then (do-fps fps start-time
+		  (lambda (delta-time)
+		    (livesupport:continuable 
+		      (funcall update-func ctx delta-time))))
+	:until (window-should-close ctx)
+	:do (livesupport:update-repl-link)))
