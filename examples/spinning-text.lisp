@@ -7,26 +7,29 @@
 
 (defparameter *default-font* nil)
 
-(let ((rotation 0.0)
-      )
-  (defun update (ctx delta-time)
+(let ((rotation 0.0))
+  (defun update ()
     "Update the game state. This function can be expanded to include more complex logic."
     ;; For now, we do nothing here.
-    (let* ((font-size 50)
- 	   (text (format nil "Hello, Gamebits! FPS=~A" (round (/ 1.0 delta-time))))
-	   (text-size (measure-text ctx text *default-font* font-size))
+    (let* ((delta-time (get-frame-time))
+	   (font-spacing 1.0)
+	   (font-size 50.0)
+ 	   (text (format nil "Hello, Gamebits! FPS=~A" (get-fps)))
+	   (text-size (measure-text-ex *default-font* text font-size font-spacing))
 	   (origin (make-vector2 :x (/ (vector2-x text-size) 2) :y (/ (vector2-y text-size) 2))))
-      (with-drawing (ctx)
-	(clear-screen ctx +white+)
-	(draw-text ctx 400 300
-		   text
-		   +blue+ *default-font* font-size rotation origin)
+      (with-drawing ()
+	(clear-background +white+)
+	(draw-text-pro *default-font* text (make-vector2 :x 400 :y 300)
+		       origin rotation font-size font-spacing +blue+
 	(incf rotation (* 90 delta-time 0.5))
 	))))
 
 (defun spinning-text ()
   (float-features:with-float-traps-masked (:overflow :invalid :divide-by-zero)
-    (with-context (ctx :raylib 800 600 "Spinning Text Example")
-      (with-font (ctx *default-font* "Roboto/static/Roboto-Regular.ttf" 50)
-	(run-game ctx 'update)))))
+    (with-window (800 600 "Spinning Text Example")
+      (with-font (*default-font* "Roboto/static/Roboto-Regular.ttf" 50)
+	(loop :until (window-should-close)
+	  :do (livesupport:continuable 
+		  (funcall 'update))
+	      (livesupport:update-repl-link))))))
 

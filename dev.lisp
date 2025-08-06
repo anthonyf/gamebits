@@ -6,7 +6,7 @@
 (asdf:load-system "slynk")
 (slynk:create-server :port 4005 :dont-close t)
 
-(asdf:load-system :gamebits/examples)
+(asdf:load-system :gamebits)
 
 (in-package #:cl-user)
 (use-package 'gamebits)
