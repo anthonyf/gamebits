@@ -3,7 +3,8 @@
   (:use #:cl)
   (:mix-reexport #:gamebits/macros
 		 #:gamebits/context
-		 #:gamebits/color)
+		 #:gamebits/color
+		 #:gamebits/imgui)
   (:export #:run-game))
 
 (in-package #:gamebits)

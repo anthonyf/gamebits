@@ -45,8 +45,36 @@
 (defmethod measure-text ((ctx raylib-context) text font size)
   (r:measure-text-ex font text (float size) 1.0))
 
+(defmethod mouse-button-down-p ((ctx raylib-context) button-index)
+  (r:is-mouse-button-down button-index))
+
+(defmethod mouse-button-up-p ((ctx raylib-context) button-index)
+  (r:is-mouse-button-up button-index))
+
+(defmethod mouse-button-pressed-p ((ctx raylib-context) button-index)
+  (r:is-mouse-button-pressed button-index))
+
+(defmethod mouse-button-released-p ((ctx raylib-context) button-index)
+  (r:is-mouse-button-released button-index))
+
+(defmethod mouse-position ((ctx raylib-context))
+  (r:get-mouse-position))
+
 (defmethod window-should-close ((ctx raylib-context))
   (r:window-should-close))
+
+
+(defmethod draw-line ((ctx raylib-context) x1 y1 x2 y2 color thickness)
+  )
+(defmethod draw-arc-filled ((ctx raylib-context) center-x center-y color radius))
+(defmethod draw-arc-lines ((ctx raylib-context) center-x center-y color radius thickness))
+
+(defmethod draw-filled-rect ((ctx raylib-context) x y width height color &optional rotation origin)
+  #+nil(r:draw-)
+  )
+(defmethod draw-lined-rect ((ctx raylib-context) x y width height color thickness &optional rotation origin))
+(defmethod draw-filled-rounded-rect ((ctx raylib-context) x y width height color &optional rotation origin))
+(defmethod draw-lined-rouned-rect ((ctx raylib-context) x y width height color thickness roundness &optional rotation origin))
 
 (defmethod cffi:translate-into-foreign-memory
     ((value color)

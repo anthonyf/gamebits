@@ -13,6 +13,7 @@
   :components ((:module "src" :components ((:file "color")
 					   (:file "macros")
 					   (:file "context")
+					   (:file "imgui")
 					   (:file "gamebits")))))
 
 (asdf:defsystem #:gamebits/raylib
@@ -38,4 +39,5 @@
   :depends-on (#:gamebits/raylib)
   :components ((:module "examples"
 		:components ((:file "spinning-text")
+			     (:file "buttons")
 			     (:file "examples")))))

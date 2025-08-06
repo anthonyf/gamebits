@@ -3,20 +3,30 @@
   (:use #:cl)
   (:export #:%color #:%color-tclass #:r #:g #:b #:a
 	   #:%vector2 #:%vector2-tclass #:x #:y
-	   #:font
-	   #:load-font
-	   #:load-font-ex
-	   #:unload-font
+	   
 	   #:init-window
 	   #:close-window
 	   #:set-target-fps
 	   #:window-should-close
+
 	   #:begin-drawing
 	   #:end-drawing
 	   #:clear-background
+
+	   #:font
+	   #:load-font
+	   #:load-font-ex
+	   #:unload-font
+
 	   #:draw-text
 	   #:draw-text-pro
 	   #:measure-text-ex
+
+	   #:get-mouse-position
+	   #:is-mouse-button-down
+	   #:is-mouse-button-up
+	   #:is-mouse-button-pressed
+	   #:is-mouse-button-released
 	   ))
 
 (in-package #:gamebits/raylib)
@@ -205,9 +215,54 @@
   (font-size :float)
   (spacing :float))    
 
-(defstruct color-lisp 
-  "A structure representing a color with red, green, blue, and alpha components."
-  (r 0 :type (integer 0 255))
-  (g 0 :type (integer 0 255))
-  (b 0 :type (integer 0 255))
-  (a 255 :type (integer 0 255)))
+;; input
+
+;; Vector2 GetMousePosition(void);
+(cffi:defcfun ("GetMousePosition" get-mouse-position) (:struct %vector2))
+
+;; bool IsMouseButtonDown(int button);
+(cffi:defcfun ("IsMouseButtonDown" is-mouse-button-down) :bool
+  (button :int))
+
+;; bool IsMouseButtonPressed(int button);                  // Check if a mouse button has been pressed once
+(cffi:defcfun ("IsMouseButtonPressed" is-mouse-button-pressed) :bool
+  (button :int))
+
+;; bool IsMouseButtonReleased(int button);                 // Check if a mouse button has been released once
+(cffi:defcfun ("IsMouseButtonReleased" is-mouse-button-released) :bool
+  (button :int))
+
+;; bool IsMouseButtonUp(int button);                       // Check if a mouse button is NOT being pressed
+(cffi:defcfun ("IsMouseButtonUp" is-mouse-button-up) :bool
+  (button :int))
+
+
+;; void DrawRectangleV(Vector2 position, Vector2 size, Color color);                                  // Draw a color-filled rectangle (Vector version)
+
+(cffi:defcfun ("DrawRectangleV" draw-rectangle-v) :void
+  (position (:struct %vector2))
+  (size (:struct %vector2))
+  (color (:struct %color)))
+
+;; void DrawRectangleRec(Rectangle rec, Color color);                                                 // Draw a color-filled rectangle
+
+#+nil(cffi:defcfun ("DrawRectangleRec" draw-rectangle-rec) :void
+  (rec (:struct %rectangle)) ; Assuming Rectangle is defined as %rectangle
+  (color (:struct %color)))
+
+;; void DrawRectanglePro(Rectangle rec, Vector2 origin, float rotation, Color color);                 // Draw a color-filled rectangle with pro parameters
+;; void DrawRectangleGradientV(int posX, int posY, int width, int height, Color top, Color bottom);   // Draw a vertical-gradient-filled rectangle
+;; void DrawRectangleGradientH(int posX, int posY, int width, int height, Color left, Color right);   // Draw a horizontal-gradient-filled rectangle
+;; void DrawRectangleGradientEx(Rectangle rec, Color topLeft, Color bottomLeft, Color topRight, Color bottomRight); // Draw a gradient-filled rectangle with custom vertex colors
+;; void DrawRectangleLines(int posX, int posY, int width, int height, Color color);                   // Draw rectangle outline
+;; void DrawRectangleLinesEx(Rectangle rec, float lineThick, Color color);                            // Draw rectangle outline with extended parameters
+;; void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);              // Draw rectangle with rounded edges
+;; void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, Color color);         // Draw rectangle lines with rounded edges
+;; void DrawRectangleRoundedLinesEx(Rectangle rec, float roundness, int segments, float lineThick, Color color); // Draw rectangle with rounded edges outline
+;; void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                                // Draw a color-filled triangle (vertex in counter-clockwise order!)
+;; void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                           // Draw triangle outline (vertex in counter-clockwise order!)
+;; void DrawTriangleFan(const Vector2 *points, int pointCount, Color color);                          // Draw a triangle fan defined by points (first vertex is the center)
+;; void DrawTriangleStrip(const Vector2 *points, int pointCount, Color color);                        // Draw a triangle strip defined by points
+;; void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);               // Draw a regular polygon (Vector version)
+;; void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, Color color);          // Draw a polygon outline of n sides
+;; void DrawPolyLinesEx(Vector2 center, int sides, float radius, float rotation, float lineThick, Color color); // Draw a polygon outline of n sides with extended parameters
