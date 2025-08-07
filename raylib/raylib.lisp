@@ -1,7 +1,7 @@
 ;; raylib.lisp
 (uiop:define-package #:gamebits/raylib
   (:use #:cl)
-  (:export #:color #:make-color :color-r :color-g :color-b :color-a
+  (:export #:%color #:color #:make-color :color-r :color-g :color-b :color-a
 	   #:+lightgray+
 	   #:+gray+
 	   #:+darkgray+
@@ -28,8 +28,12 @@
 	   #:+blank+
 	   #:+magenta+
 	   #:+raywhite+
+
+	   #:get-color
 	   
-	   #:vector2 #:make-vector2 :vector2-x :vector2-y
+	   #:%vector #:vector2 #:make-vector2 :vector2-x :vector2-y
+
+	   #:%rectangle #:rectangle #:make-rectangle :rectangle-x :rectangle-y
 	   
 	   #:init-window
 	   #:close-window
@@ -46,7 +50,8 @@
 	   
 	   #:clear-background
 
-	   #:font
+	   #:%font #:font
+	   #:get-font-default
 	   #:load-font
 	   #:load-font-ex
 	   #:unload-font
@@ -111,6 +116,10 @@
 (defparameter +magenta+ (make-color :r 255 :g 0 :b 255 :a 255))     ;; Magenta                    
 (defparameter +raywhite+ (make-color :r 245 :g 245 :b 245 :a 255))   ;; My own White (raylib logo)
 
+;; static Color GetColor(int hexValue); 
+(cffi:defcfun ("GetColor" get-color) (:struct %color)
+  (hex-value :int))
+
 (defmethod cffi:translate-into-foreign-memory
     ((value color)
      (type %color-tclass)
@@ -140,6 +149,35 @@
   (cffi:with-foreign-slots ((x y) pointer (:struct %vector2))
     (make-vector2 :x x :y y)))
 
+;; typedef struct Rectangle {
+;;     float x;                // Rectangle top-left corner position x
+;;     float y;                // Rectangle top-left corner position y
+;;     float width;            // Rectangle width
+;;     float height;           // Rectangle height
+;; } Rectangle;
+
+(cffi:defcstruct %rectangle
+  (x :float)
+  (y :float)
+  (width :float)
+  (height :float))
+
+(defstruct rectangle (x :float) (y :float) (width :float) (height :float))
+
+(defmethod cffi:translate-into-foreign-memory
+    ((value rectangle)
+     (type %rectangle-tclass)
+     pointer)
+  (cffi:with-foreign-slots ((x y width height) pointer (:struct %rectangle))
+    (setf x (float (rectangle-x value)))
+    (setf y (float (rectangle-y value)))
+    (setf width (float (rectangle-width value)))
+    (setf height (float (rectangle-height value)))))
+
+(defmethod cffi:translate-from-foreign 
+    (pointer (type %rectangle-tclass))
+  (cffi:with-foreign-slots ((x y width height) pointer (:struct %rectangle))
+    (make-rectangle :x x :y y :width width :height height)))
 
 (cffi:defcfun ("InitWindow" init-window) :void
   (width :int)
@@ -283,6 +321,9 @@
 		   :texture (cffi:translate-from-foreign texture '(:struct %texture))
 		   :recs recs
 		   :glyphs glyphs)))
+
+;; RLAPI Font GetFontDefault(void);
+(cffi:defcfun ("GetFontDefault" get-font-default) (:struct %font))
 
 ;; RLAPI Font LoadFont(const char *fileName);
 (cffi:defcfun ("LoadFont" load-font) (:struct %font)

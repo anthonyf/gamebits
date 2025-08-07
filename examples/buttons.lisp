@@ -6,19 +6,19 @@
 (in-package #:gamebits/examples/buttons)
 
 
-(defun update (ctx delta-time)
-  (declare (ignore delta-time))
-  (with-drawing (ctx)
-    (clear-screen ctx +white+)
-    (with-ui-state ()
-      (with-theme ((make-instance 'simple-theme))
-	(when (button '#.(gensym) "Click Me" 10 10 100 50)
-	  (format t "Button Clicked!~%"))))))
-
-(defparameter *default-font* nil)
+(let ((toggled nil))
+ (defun update ()
+   (with-drawing ()
+     (clear-background (get-color (gui-get-style +DEFAULT+ +BACKGROUND-COLOR+)))
+       (when (gui-button (make-rectangle :x 100.0 :y 100.0 :width 200.0 :height 80.0) "Click Me!")
+	 (format t "Button Clicked!~%"))
+       (when (gui-checkbox (make-rectangle :x 100 :y 250 :width 20 :height 20) "Check Me!" toggled)
+	 (format t "Checkbox Toggled! ~A~%" toggled)))))
 
 (defun buttons()
   (float-features:with-float-traps-masked (:overflow :invalid :divide-by-zero)
-    (with-context (ctx :raylib 800 600 "Buttons Example")
-      (with-font (ctx *default-font* "Roboto/static/Roboto-Regular.ttf" 50)
-	(run-game ctx 'update)))))
+    (with-window (800 600 "Buttons Example")
+      (gui-set-font (get-font-default))
+      (loop :until (window-should-close)
+	    do (livesupport:continuable
+		 (funcall 'update))))))

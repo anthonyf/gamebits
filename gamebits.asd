@@ -13,10 +13,10 @@
 	       #:cffi
 	       #:cffi-libffi)
   :components ((:module "raylib"
-		:components ((:file "raylib")))
+		:components ((:file "raylib")
+			     (:file "raygui")))	       
+	       (:module "src" :components ((:file "gamebits")))
 	       (:module "examples"
 		:components ((:file "spinning-text")
 			     (:file "buttons")
-			     (:file "examples")))
-	       (:module "src" :components ((:file "gamebits")))
-	       ))
+			     (:file "examples")))))

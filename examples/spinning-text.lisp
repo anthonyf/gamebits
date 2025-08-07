@@ -20,7 +20,7 @@
       (with-drawing ()
 	(clear-background +white+)
 	(draw-text-pro *default-font* text (make-vector2 :x 400 :y 300)
-		       origin rotation font-size font-spacing +blue+
+		       origin rotation font-size font-spacing +blue+)
 	(incf rotation (* 90 delta-time 0.5))
 	))))
 
@@ -29,7 +29,7 @@
     (with-window (800 600 "Spinning Text Example")
       (with-font (*default-font* "Roboto/static/Roboto-Regular.ttf" 50)
 	(loop :until (window-should-close)
-	  :do (livesupport:continuable 
-		  (funcall 'update))
-	      (livesupport:update-repl-link))))))
+	      :do (livesupport:continuable 
+		    (funcall 'update))
+		  (livesupport:update-repl-link))))))
 
