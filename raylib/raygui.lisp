@@ -17,7 +17,13 @@
 	   #:gui-set-style	   
 	   #:gui-get-style
 	   #:+DEFAULT+
+	   #:+TEXT-SIZE+
+	   #:+TEXT-SPACING+
+	   #:+LINE-COLOR+
 	   #:+BACKGROUND-COLOR+
+	   #:+TEXT-LINE-SPACING+
+	   #:+TEXT-ALIGNMENT-VERTICAL+
+	   #:+TEXT-WRAP-MODE+
 	   #:gui-button
 	   #:gui-checkbox)
   )
@@ -96,7 +102,16 @@
   (property :int))
 
 (defparameter +DEFAULT+ 0)
-(defparameter +BACKGROUND-COLOR+ 16)
+
+;; GuiDefaultProperty's
+(defparameter +TEXT-SIZE+ 16)
+(defparameter +TEXT-SPACING+ 17)
+(defparameter +LINE-COLOR+ 18)
+(defparameter +BACKGROUND-COLOR+ 19)
+(defparameter +TEXT-LINE-SPACING+ 20)
+(defparameter +TEXT-ALIGNMENT-VERTICAL+ 21)
+(defparameter +TEXT-WRAP-MODE+ 22)
+
 
 ;; RAYGUIAPI int GuiButton(Rectangle bounds, const char *text);                                           // Button control, returns true when clicked
 

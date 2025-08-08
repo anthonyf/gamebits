@@ -34,6 +34,24 @@
 	   #:%vector #:vector2 #:make-vector2 :vector2-x :vector2-y
 
 	   #:%rectangle #:rectangle #:make-rectangle :rectangle-x :rectangle-y
+
+	   #:set-config-flags
+	   #:+FLAG-VSYNC-HINT+
+	   #:+FLAG-FULLSCREEN-MODE+
+	   #:+FLAG-WINDOW-RESIZABLE+
+	   #:+FLAG-WINDOW-UNDECORATED+
+	   #:+FLAG-WINDOW-HIDDEN+
+	   #:+FLAG-WINDOW-MINIMIZED+
+	   #:+FLAG-WINDOW-MAXIMIZED+
+	   #:+FLAG-WINDOW-UNFOCUSED+
+	   #:+FLAG-WINDOW-TOPMOST+
+	   #:+FLAG-WINDOW-ALWAYS-RUN+
+	   #:+FLAG-WINDOW-TRANSPARENT+
+	   #:+FLAG-WINDOW-HIGHDPI+
+	   #:+FLAG-WINDOW-MOUSE-PASSTHROUGH+
+	   #:+FLAG-BORDERLESS-WINDOWED-MODE+
+	   #:+FLAG-MSAA-4X-HINT+
+	   #:+FLAG-INTERLACED-HINT+
 	   
 	   #:init-window
 	   #:close-window
@@ -178,6 +196,27 @@
     (pointer (type %rectangle-tclass))
   (cffi:with-foreign-slots ((x y width height) pointer (:struct %rectangle))
     (make-rectangle :x x :y y :width width :height height)))
+
+;; RLAPI void SetConfigFlags(unsigned int flags);                    // Setup init configuration flags (view FLAGS)
+(cffi:defcfun ("SetConfigFlags" set-config-flags) :void
+  (flags :uint))
+
+(defparameter +FLAG-VSYNC-HINT+          #x00000040)
+(defparameter +FLAG-FULLSCREEN-MODE+     #x00000002)
+(defparameter +FLAG-WINDOW-RESIZABLE+    #x00000004)
+(defparameter +FLAG-WINDOW-UNDECORATED+  #x00000008)
+(defparameter +FLAG-WINDOW-HIDDEN+       #x00000080)
+(defparameter +FLAG-WINDOW-MINIMIZED+    #x00000200)
+(defparameter +FLAG-WINDOW-MAXIMIZED+    #x00000400)
+(defparameter +FLAG-WINDOW-UNFOCUSED+    #x00000800)
+(defparameter +FLAG-WINDOW-TOPMOST+      #x00001000)
+(defparameter +FLAG-WINDOW-ALWAYS-RUN+   #x00000100)
+(defparameter +FLAG-WINDOW-TRANSPARENT+  #x00000010)
+(defparameter +FLAG-WINDOW-HIGHDPI+      #x00002000)
+(defparameter +FLAG-WINDOW-MOUSE-PASSTHROUGH+  #x00004000)
+(defparameter +FLAG-BORDERLESS-WINDOWED-MODE+  #x00008000)
+(defparameter +FLAG-MSAA-4X-HINT+              #x00000020)
+(defparameter +FLAG-INTERLACED-HINT+           #x00010000)
 
 (cffi:defcfun ("InitWindow" init-window) :void
   (width :int)
