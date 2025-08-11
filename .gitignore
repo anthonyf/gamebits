@@ -1,3 +1,5 @@
 *fasl
 /ocicl/
 .DS_Store
+*.fas
+*~
