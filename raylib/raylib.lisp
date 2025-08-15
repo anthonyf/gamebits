@@ -218,7 +218,8 @@
 	   #:begin-mode-2d
 	   #:end-mode-2d
 	   #:with-mode-2d
-	   	   
+
+	   #:draw-fps
 	   #:draw-text
 	   #:draw-text-pro
 	   #:measure-text-ex
@@ -2297,6 +2298,9 @@
 
 ;; // Text drawing functions
 ;; RLAPI void DrawFPS(int posX, int posY);                                                     // Draw current FPS
+(cffi:defcfun ("DrawFPS" draw-fps) :void
+  (x :int)
+  (y :int))
 
 ;; RLAPI void DrawText(const char *text, int posX, int posY, int fontSize, Color color);       // Draw text (using default font)
 (cffi:defcfun ("DrawText" draw-text) :void
