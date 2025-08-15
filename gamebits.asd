@@ -14,8 +14,11 @@
 	       #:cffi-libffi)
   :components ((:module "raylib"
 		:components ((:file "raylib")
-			     (:file "raygui")))	       
-	       (:module "src" :components ((:file "gamebits")))
+			     (:file "raygui")
+			     (:file "rlgl")))
+	       (:module "src"
+		:components ((:file "vector-math")
+			     (:file "gamebits")))
 	       (:module "examples"
 		:components ((:file "spinning-text")
 			     (:file "buttons")

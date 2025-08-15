@@ -34,8 +34,34 @@
 	   #:%vector #:vector2 #:make-vector2 :vector2-x :vector2-y
 
 	   #:%rectangle #:rectangle #:make-rectangle :rectangle-x :rectangle-y
+	   :rectangle-width :rectangle-height
 
+	   #:%font #:font
+	   #:get-font-default
+	   #:load-font
+	   #:load-font-ex
+	   #:unload-font
+	   #:with-font
+
+	   #:make-camera2d
+	   #:camera2d-offset
+	   #:camera2d-target
+	   #:camera2d-rotation
+	   #:camera2d-zoom
+	   
 	   #:set-config-flags
+
+	   #:is-key-pressed
+	   #:is-key-pressed-repeat
+	   #:is-key-down
+	   #:is-key-released
+	   #:is-key-up
+	   #:get-key-pressed
+	   #:get-char-pressed
+	   #:get-key-name
+	   #:set-exit-key
+	   
+	   
 	   #:+FLAG-VSYNC-HINT+
 	   #:+FLAG-FULLSCREEN-MODE+
 	   #:+FLAG-WINDOW-RESIZABLE+
@@ -52,7 +78,126 @@
 	   #:+FLAG-BORDERLESS-WINDOWED-MODE+
 	   #:+FLAG-MSAA-4X-HINT+
 	   #:+FLAG-INTERLACED-HINT+
-	   
+
+	   #:+KEY-NULL+
+	   #:+KEY-APOSTROPHE+
+	   #:+KEY-COMMA+
+	   #:+KEY-MINUS+
+	   #:+KEY-PERIOD+
+	   #:+KEY-SLASH+
+	   #:+KEY-ZERO+
+	   #:+KEY-ONE+
+	   #:+KEY-TWO+
+	   #:+KEY-THREE+
+	   #:+KEY-FOUR+
+	   #:+KEY-FIVE+
+	   #:+KEY-SIX+
+	   #:+KEY-SEVEN+
+	   #:+KEY-EIGHT+
+	   #:+KEY-NINE+
+	   #:+KEY-SEMICOLON+
+	   #:+KEY-EQUAL+
+	   #:+KEY-A+
+	   #:+KEY-B+
+	   #:+KEY-C+
+	   #:+KEY-D+
+	   #:+KEY-E+
+	   #:+KEY-F+
+	   #:+KEY-G+
+	   #:+KEY-H+
+	   #:+KEY-I+
+	   #:+KEY-J+
+	   #:+KEY-K+
+	   #:+KEY-L+
+	   #:+KEY-M+
+	   #:+KEY-N+
+	   #:+KEY-O+
+	   #:+KEY-P+
+	   #:+KEY-Q+
+	   #:+KEY-R+
+	   #:+KEY-S+
+	   #:+KEY-T+
+	   #:+KEY-U+
+	   #:+KEY-V+
+	   #:+KEY-W+
+	   #:+KEY-X+
+	   #:+KEY-Y+
+	   #:+KEY-Z+
+	   #:+KEY-LEFT-BRACKET+
+	   #:+KEY-BACKSLASH+
+	   #:+KEY-RIGHT-BRACKET+
+	   #:+KEY-GRAVE+
+	   #:+KEY-SPACE+
+	   #:+KEY-ESCAPE+
+	   #:+KEY-ENTER+
+	   #:+KEY-TAB+
+	   #:+KEY-BACKSPACE+
+	   #:+KEY-INSERT+
+	   #:+KEY-DELETE+
+	   #:+KEY-RIGHT+
+	   #:+KEY-LEFT+
+	   #:+KEY-DOWN+
+	   #:+KEY-UP+
+	   #:+KEY-PAGE-UP+
+	   #:+KEY-PAGE-DOWN+
+	   #:+KEY-HOME+
+	   #:+KEY-END+
+	   #:+KEY-CAPS-LOCK+
+	   #:+KEY-SCROLL-LOCK+
+	   #:+KEY-NUM-LOCK+
+	   #:+KEY-PRINT-SCREEN+
+	   #:+KEY-PAUSE+
+	   #:+KEY-F1+
+	   #:+KEY-F2+
+	   #:+KEY-F3+
+	   #:+KEY-F4+
+	   #:+KEY-F5+
+	   #:+KEY-F6+
+	   #:+KEY-F7+
+	   #:+KEY-F8+
+	   #:+KEY-F9+
+	   #:+KEY-F10+
+	   #:+KEY-F11+
+	   #:+KEY-F12+
+	   #:+KEY-LEFT-SHIFT+
+	   #:+KEY-LEFT-CONTROL+
+	   #:+KEY-LEFT-ALT+
+	   #:+KEY-LEFT-SUPER+
+	   #:+KEY-RIGHT-SHIFT+
+	   #:+KEY-RIGHT-CONTROL+
+	   #:+KEY-RIGHT-ALT+
+	   #:+KEY-RIGHT-SUPER+
+	   #:+KEY-KB-MENU+
+	   #:+KEY-KP-0+
+	   #:+KEY-KP-1+
+	   #:+KEY-KP-2+
+	   #:+KEY-KP-3+
+	   #:+KEY-KP-4+
+	   #:+KEY-KP-5+
+	   #:+KEY-KP-6+
+	   #:+KEY-KP-7+
+	   #:+KEY-KP-8+
+	   #:+KEY-KP-9+
+	   #:+KEY-KP-DECIMAL+
+	   #:+KEY-KP-DIVIDE+
+	   #:+KEY-KP-MULTIPLY+
+	   #:+KEY-KP-SUBTRACT+
+	   #:+KEY-KP-ADD+
+	   #:+KEY-KP-ENTER+
+	   #:+KEY-KP-EQUAL+
+	   #:+KEY-BACK+
+	   #:+KEY-MENU+
+	   #:+KEY-VOLUME-UP+
+	   #:+KEY-VOLUME-DOWN+
+
+	   #:+MOUSE-BUTTON-LEFT+   ; Mouse button left
+	   #:+MOUSE-BUTTON-RIGHT+  ; Mouse button right
+	   #:+MOUSE-BUTTON-MIDDLE+ ; Mouse button middle (pressed wheel)
+	   #:+MOUSE-BUTTON-SIDE+   ; Mouse button side (advanced mouse device)
+	   #:+MOUSE-BUTTON-EXTRA+  ; Mouse button extra (advanced mouse device)
+	   #:+MOUSE-BUTTON-FORWARD+ ; Mouse button forward (advanced mouse device)
+	   #:+MOUSE-BUTTON-BACK+    ; Mouse button back (advanced mouse device)
+
 	   #:init-window
 	   #:close-window
 	   #:with-window
@@ -67,20 +212,13 @@
 	   #:begin-drawing
 	   #:end-drawing
 	   #:with-drawing
-	   
+
 	   #:clear-background
 
 	   #:begin-mode-2d
 	   #:end-mode-2d
 	   #:with-mode-2d
-	   
-	   #:%font #:font
-	   #:get-font-default
-	   #:load-font
-	   #:load-font-ex
-	   #:unload-font
-	   #:with-font
-	   
+	   	   
 	   #:draw-text
 	   #:draw-text-pro
 	   #:measure-text-ex
@@ -91,9 +229,14 @@
 	   #:is-mouse-button-pressed
 	   #:is-mouse-button-released
 
+	   #:draw-line
+	   #:draw-line-ex
 	   #:draw-circle
+	   #:draw-circle-v
 	   #:draw-rectangle-v
 	   #:draw-rectangle-rec
+	   #:draw-triangle
+	   #:draw-triangle-lines
 	   
 	   ))
 
@@ -284,6 +427,8 @@
 ;; #define RL_MATRIX_TYPE
 
 ;; // Some Basic Colors
+(defstruct color (r :int) (g :int) (b :int) (a :int))
+
 ;; // NOTE: Custom raylib color palette for amazing visuals on WHITE background
 ;; #define LIGHTGRAY  CLITERAL(Color){ 200, 200, 200, 255 }   // Light Gray
 (defparameter +lightgray+ (make-color :r 200 :g 200 :b 200 :a 255))
@@ -438,8 +583,6 @@
   (g :uint8)
   (b :uint8)
   (a :uint8))
-
-(defstruct color (r :int) (g :int) (b :int) (a :int))
 
 (defmethod cffi:translate-into-foreign-memory
     ((value color)
@@ -950,119 +1093,229 @@
 ;; // required keys for alternative layouts
 ;; typedef enum {
 ;;     KEY_NULL            = 0,        // Key: NULL, used for no key pressed
+(defparameter +KEY-NULL+ 0)
 ;;     // Alphanumeric keys
 ;;     KEY_APOSTROPHE      = 39,       // Key: '
+(defparameter +KEY-APOSTROPHE+ 39)
 ;;     KEY_COMMA           = 44,       // Key: ,
+(defparameter +KEY-COMMA+ 44)
 ;;     KEY_MINUS           = 45,       // Key: -
+(defparameter +KEY-MINUS+ 45)
 ;;     KEY_PERIOD          = 46,       // Key: .
+(defparameter +KEY-PERIOD+ 46)
 ;;     KEY_SLASH           = 47,       // Key: /
+(defparameter +KEY-SLASH+ 47)
 ;;     KEY_ZERO            = 48,       // Key: 0
+(defparameter +KEY-ZERO+ 48)
 ;;     KEY_ONE             = 49,       // Key: 1
+(defparameter +KEY-ONE+ 49)
 ;;     KEY_TWO             = 50,       // Key: 2
+(defparameter +KEY-TWO+ 50)
 ;;     KEY_THREE           = 51,       // Key: 3
+(defparameter +KEY-THREE+ 51)
 ;;     KEY_FOUR            = 52,       // Key: 4
+(defparameter +KEY-FOUR+ 52)
 ;;     KEY_FIVE            = 53,       // Key: 5
+(defparameter +KEY-FIVE+ 53)
 ;;     KEY_SIX             = 54,       // Key: 6
+(defparameter +KEY-SIX+ 54)
 ;;     KEY_SEVEN           = 55,       // Key: 7
+(defparameter +KEY-SEVEN+ 55)
 ;;     KEY_EIGHT           = 56,       // Key: 8
+(defparameter +KEY-EIGHT+ 56)
 ;;     KEY_NINE            = 57,       // Key: 9
+(defparameter +KEY-NINE+ 57)
 ;;     KEY_SEMICOLON       = 59,       // Key: ;
+(defparameter +KEY-SEMICOLON+ 59)
 ;;     KEY_EQUAL           = 61,       // Key: =
+(defparameter +KEY-EQUAL+ 61)
 ;;     KEY_A               = 65,       // Key: A | a
+(defparameter +KEY-A+ 65)
 ;;     KEY_B               = 66,       // Key: B | b
+(defparameter +KEY-B+ 66)
 ;;     KEY_C               = 67,       // Key: C | c
+(defparameter +KEY-C+ 67)
 ;;     KEY_D               = 68,       // Key: D | d
+(defparameter +KEY-D+ 68)
 ;;     KEY_E               = 69,       // Key: E | e
+(defparameter +KEY-E+ 69)
 ;;     KEY_F               = 70,       // Key: F | f
+(defparameter +KEY-F+ 70)
 ;;     KEY_G               = 71,       // Key: G | g
+(defparameter +KEY-G+ 71)
 ;;     KEY_H               = 72,       // Key: H | h
+(defparameter +KEY-H+ 72)
 ;;     KEY_I               = 73,       // Key: I | i
+(defparameter +KEY-I+ 73)
 ;;     KEY_J               = 74,       // Key: J | j
+(defparameter +KEY-J+ 74)
 ;;     KEY_K               = 75,       // Key: K | k
+(defparameter +KEY-K+ 75)
 ;;     KEY_L               = 76,       // Key: L | l
+(defparameter +KEY-L+ 76)
 ;;     KEY_M               = 77,       // Key: M | m
+(defparameter +KEY-M+ 77)
 ;;     KEY_N               = 78,       // Key: N | n
+(defparameter +KEY-N+ 78)
 ;;     KEY_O               = 79,       // Key: O | o
+(defparameter +KEY-O+ 79)
 ;;     KEY_P               = 80,       // Key: P | p
+(defparameter +KEY-P+ 80)
 ;;     KEY_Q               = 81,       // Key: Q | q
+(defparameter +KEY-Q+ 81)
 ;;     KEY_R               = 82,       // Key: R | r
+(defparameter +KEY-R+ 82)
 ;;     KEY_S               = 83,       // Key: S | s
+(defparameter +KEY-S+ 83)
 ;;     KEY_T               = 84,       // Key: T | t
+(defparameter +KEY-T+ 84)
 ;;     KEY_U               = 85,       // Key: U | u
+(defparameter +KEY-U+ 85)
 ;;     KEY_V               = 86,       // Key: V | v
+(defparameter +KEY-V+ 86)
 ;;     KEY_W               = 87,       // Key: W | w
+(defparameter +KEY-W+ 87)
 ;;     KEY_X               = 88,       // Key: X | x
+(defparameter +KEY-X+ 88)
 ;;     KEY_Y               = 89,       // Key: Y | y
+(defparameter +KEY-Y+ 89)
 ;;     KEY_Z               = 90,       // Key: Z | z
+(defparameter +KEY-Z+ 90)
 ;;     KEY_LEFT_BRACKET    = 91,       // Key: [
+(defparameter +KEY-LEFT-BRACKET+ 91)
 ;;     KEY_BACKSLASH       = 92,       // Key: '\'
+(defparameter +KEY-BACKSLASH+ 92)
 ;;     KEY_RIGHT_BRACKET   = 93,       // Key: ]
+(defparameter +KEY-RIGHT-BRACKET+ 93)
 ;;     KEY_GRAVE           = 96,       // Key: `
+(defparameter +KEY-GRAVE+ 96)
 ;;     // Function keys
 ;;     KEY_SPACE           = 32,       // Key: Space
+(defparameter +KEY-SPACE+ 32)
 ;;     KEY_ESCAPE          = 256,      // Key: Esc
+(defparameter +KEY-ESCAPE+ 256)
 ;;     KEY_ENTER           = 257,      // Key: Enter
+(defparameter +KEY-ENTER+ 257)
 ;;     KEY_TAB             = 258,      // Key: Tab
+(defparameter +KEY-TAB+ 258)
 ;;     KEY_BACKSPACE       = 259,      // Key: Backspace
+(defparameter +KEY-BACKSPACE+ 259)
 ;;     KEY_INSERT          = 260,      // Key: Ins
+(defparameter +KEY-INSERT+ 260)
 ;;     KEY_DELETE          = 261,      // Key: Del
+(defparameter +KEY-DELETE+ 261)
 ;;     KEY_RIGHT           = 262,      // Key: Cursor right
+(defparameter +KEY-RIGHT+ 262)
 ;;     KEY_LEFT            = 263,      // Key: Cursor left
+(defparameter +KEY-LEFT+ 263)
 ;;     KEY_DOWN            = 264,      // Key: Cursor down
+(defparameter +KEY-DOWN+ 264)
 ;;     KEY_UP              = 265,      // Key: Cursor up
+(defparameter +KEY-UP+ 265)
 ;;     KEY_PAGE_UP         = 266,      // Key: Page up
+(defparameter +KEY-PAGE-UP+ 266)
 ;;     KEY_PAGE_DOWN       = 267,      // Key: Page down
+(defparameter +KEY-PAGE-DOWN+ 267)
 ;;     KEY_HOME            = 268,      // Key: Home
+(defparameter +KEY-HOME+ 268)
 ;;     KEY_END             = 269,      // Key: End
+(defparameter +KEY-END+ 269)
 ;;     KEY_CAPS_LOCK       = 280,      // Key: Caps lock
+(defparameter +KEY-CAPS-LOCK+ 280)
 ;;     KEY_SCROLL_LOCK     = 281,      // Key: Scroll down
+(defparameter +KEY-SCROLL-LOCK+ 281)
 ;;     KEY_NUM_LOCK        = 282,      // Key: Num lock
+(defparameter +KEY-NUM-LOCK+ 282)
 ;;     KEY_PRINT_SCREEN    = 283,      // Key: Print screen
+(defparameter +KEY-PRINT-SCREEN+ 283)
 ;;     KEY_PAUSE           = 284,      // Key: Pause
+(defparameter +KEY-PAUSE+ 284)
 ;;     KEY_F1              = 290,      // Key: F1
+(defparameter +KEY-F1+ 290)
 ;;     KEY_F2              = 291,      // Key: F2
+(defparameter +KEY-F2+ 291)
 ;;     KEY_F3              = 292,      // Key: F3
+(defparameter +KEY-F3+ 292)
 ;;     KEY_F4              = 293,      // Key: F4
+(defparameter +KEY-F4+ 293)
 ;;     KEY_F5              = 294,      // Key: F5
+(defparameter +KEY-F5+ 294)
 ;;     KEY_F6              = 295,      // Key: F6
+(defparameter +KEY-F6+ 295)
 ;;     KEY_F7              = 296,      // Key: F7
+(defparameter +KEY-F7+ 296)
 ;;     KEY_F8              = 297,      // Key: F8
+(defparameter +KEY-F8+ 297)
 ;;     KEY_F9              = 298,      // Key: F9
+(defparameter +KEY-F9+ 298)
 ;;     KEY_F10             = 299,      // Key: F10
+(defparameter +KEY-F10+ 299)
 ;;     KEY_F11             = 300,      // Key: F11
+(defparameter +KEY-F11+ 300)
 ;;     KEY_F12             = 301,      // Key: F12
+(defparameter +KEY-F12+ 301)
 ;;     KEY_LEFT_SHIFT      = 340,      // Key: Shift left
+(defparameter +KEY-LEFT-SHIFT+ 340)
 ;;     KEY_LEFT_CONTROL    = 341,      // Key: Control left
+(defparameter +KEY-LEFT-CONTROL+ 341)
 ;;     KEY_LEFT_ALT        = 342,      // Key: Alt left
+(defparameter +KEY-LEFT-ALT+ 342)
 ;;     KEY_LEFT_SUPER      = 343,      // Key: Super left
+(defparameter +KEY-LEFT-SUPER+ 343)
 ;;     KEY_RIGHT_SHIFT     = 344,      // Key: Shift right
+(defparameter +KEY-RIGHT-SHIFT+ 344)
 ;;     KEY_RIGHT_CONTROL   = 345,      // Key: Control right
+(defparameter +KEY-RIGHT-CONTROL+ 345)
 ;;     KEY_RIGHT_ALT       = 346,      // Key: Alt right
+(defparameter +KEY-RIGHT-ALT+ 346)
 ;;     KEY_RIGHT_SUPER     = 347,      // Key: Super right
+(defparameter +KEY-RIGHT-SUPER+ 347)
 ;;     KEY_KB_MENU         = 348,      // Key: KB menu
+(defparameter +KEY-KB-MENU+ 348)
 ;;     // Keypad keys
 ;;     KEY_KP_0            = 320,      // Key: Keypad 0
+(defparameter +KEY-KP-0+ 320)
 ;;     KEY_KP_1            = 321,      // Key: Keypad 1
+(defparameter +KEY-KP-1+ 321)
 ;;     KEY_KP_2            = 322,      // Key: Keypad 2
+(defparameter +KEY-KP-2+ 322)
 ;;     KEY_KP_3            = 323,      // Key: Keypad 3
+(defparameter +KEY-KP-3+ 323)
 ;;     KEY_KP_4            = 324,      // Key: Keypad 4
+(defparameter +KEY-KP-4+ 324)
 ;;     KEY_KP_5            = 325,      // Key: Keypad 5
+(defparameter +KEY-KP-5+ 325)
 ;;     KEY_KP_6            = 326,      // Key: Keypad 6
+(defparameter +KEY-KP-6+ 326)
 ;;     KEY_KP_7            = 327,      // Key: Keypad 7
+(defparameter +KEY-KP-7+ 327)
 ;;     KEY_KP_8            = 328,      // Key: Keypad 8
+(defparameter +KEY-KP-8+ 328)
 ;;     KEY_KP_9            = 329,      // Key: Keypad 9
+(defparameter +KEY-KP-9+ 329)
 ;;     KEY_KP_DECIMAL      = 330,      // Key: Keypad .
+(defparameter +KEY-KP-DECIMAL+ 330)
 ;;     KEY_KP_DIVIDE       = 331,      // Key: Keypad /
+(defparameter +KEY-KP-DIVIDE+ 331)
 ;;     KEY_KP_MULTIPLY     = 332,      // Key: Keypad *
+(defparameter +KEY-KP-MULTIPLY+ 332)
 ;;     KEY_KP_SUBTRACT     = 333,      // Key: Keypad -
+(defparameter +KEY-KP-SUBTRACT+ 333)
 ;;     KEY_KP_ADD          = 334,      // Key: Keypad +
+(defparameter +KEY-KP-ADD+ 334)
 ;;     KEY_KP_ENTER        = 335,      // Key: Keypad Enter
+(defparameter +KEY-KP-ENTER+ 335)
 ;;     KEY_KP_EQUAL        = 336,      // Key: Keypad =
+(defparameter +KEY-KP-EQUAL+ 336)
 ;;     // Android key buttons
 ;;     KEY_BACK            = 4,        // Key: Android back button
+(defparameter +KEY-BACK+ 4)
 ;;     KEY_MENU            = 5,        // Key: Android menu button
+(defparameter +KEY-MENU+ 5)
 ;;     KEY_VOLUME_UP       = 24,       // Key: Android volume up button
+(defparameter +KEY-VOLUME-UP+ 24)
 ;;     KEY_VOLUME_DOWN     = 25        // Key: Android volume down button
+(defparameter +KEY-VOLUME-DOWN+ 25)
 ;; } KeyboardKey;
 
 ;; // Add backwards compatibility support for deprecated names
@@ -1073,12 +1326,19 @@
 ;; // Mouse buttons
 ;; typedef enum {
 ;;     MOUSE_BUTTON_LEFT    = 0,       // Mouse button left
+(defparameter +MOUSE-BUTTON-LEFT+ 0)   ; Mouse button left
 ;;     MOUSE_BUTTON_RIGHT   = 1,       // Mouse button right
+(defparameter +MOUSE-BUTTON-RIGHT+ 1)  ; Mouse button right
 ;;     MOUSE_BUTTON_MIDDLE  = 2,       // Mouse button middle (pressed wheel)
+(defparameter +MOUSE-BUTTON-MIDDLE+ 2) ; Mouse button middle (pressed wheel)
 ;;     MOUSE_BUTTON_SIDE    = 3,       // Mouse button side (advanced mouse device)
+(defparameter +MOUSE-BUTTON-SIDE+ 3)   ; Mouse button side (advanced mouse device)
 ;;     MOUSE_BUTTON_EXTRA   = 4,       // Mouse button extra (advanced mouse device)
+(defparameter +MOUSE-BUTTON-EXTRA+ 4)  ; Mouse button extra (advanced mouse device)
 ;;     MOUSE_BUTTON_FORWARD = 5,       // Mouse button forward (advanced mouse device)
+(defparameter +MOUSE-BUTTON-FORWARD+ 5) ; Mouse button forward (advanced mouse device)
 ;;     MOUSE_BUTTON_BACK    = 6,       // Mouse button back (advanced mouse device)
+(defparameter +MOUSE-BUTTON-BACK+ 6)    ; Mouse button back (advanced mouse device)
 ;; } MouseButton;
 
 ;; // Mouse cursor
@@ -1614,14 +1874,38 @@
 
 ;; // Input-related functions: keyboard
 ;; RLAPI bool IsKeyPressed(int key);                             // Check if a key has been pressed once
+(cffi:defcfun ("IsKeyPressed" is-key-pressed) :bool
+  (key :int))
+
 ;; RLAPI bool IsKeyPressedRepeat(int key);                       // Check if a key has been pressed again
+(cffi:defcfun ("IsKeyPressedRepeat" is-key-pressed-repeat) :bool
+  (key :int))
+
 ;; RLAPI bool IsKeyDown(int key);                                // Check if a key is being pressed
+(cffi:defcfun ("IsKeyDown" is-key-down) :bool
+  (key :int))
+
 ;; RLAPI bool IsKeyReleased(int key);                            // Check if a key has been released once
+(cffi:defcfun ("IsKeyReleased" is-key-released) :bool
+  (key :int))
+
 ;; RLAPI bool IsKeyUp(int key);                                  // Check if a key is NOT being pressed
+(cffi:defcfun ("IsKeyUp" is-key-up) :bool
+  (key :int))
+
 ;; RLAPI int GetKeyPressed(void);                                // Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty
+(cffi:defcfun ("GetKeyPressed" get-key-pressed) :int)
+
 ;; RLAPI int GetCharPressed(void);                               // Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty
+(cffi:defcfun ("GetCharPressed" get-char-pressed) :int)
+
 ;; RLAPI const char *GetKeyName(int key);                        // Get name of a QWERTY key on the current keyboard layout (eg returns string 'q' for KEY_A on an AZERTY keyboard)
+(cffi:defcfun ("GetKeyName" get-key-name) :string
+  (key :int))
+
 ;; RLAPI void SetExitKey(int key);                               // Set a custom key to exit program (default is ESC)
+(cffi:defcfun ("SetExitKey" set-exit-key) :void
+  (key :int))
 
 ;; // Input-related functions: gamepads
 ;; RLAPI bool IsGamepadAvailable(int gamepad);                   // Check if a gamepad is available
@@ -1705,10 +1989,26 @@
 ;; // Basic shapes drawing functions
 ;; RLAPI void DrawPixel(int posX, int posY, Color color);                                                   // Draw a pixel using geometry [Can be slow, use with care]
 ;; RLAPI void DrawPixelV(Vector2 position, Color color);                                                    // Draw a pixel using geometry (Vector version) [Can be slow, use with care]
+
 ;; RLAPI void DrawLine(int startPosX, int startPosY, int endPosX, int endPosY, Color color);                // Draw a line
+(cffi:defcfun ("DrawLine" draw-line) :void
+  (start-pos-x :int)
+  (start-pos-y :int)
+  (end-pos-x :int)
+  (end-pos-y :int)
+  (color (:struct %color)))
+
 ;; RLAPI void DrawLineV(Vector2 startPos, Vector2 endPos, Color color);                                     // Draw a line (using gl lines)
+
 ;; RLAPI void DrawLineEx(Vector2 startPos, Vector2 endPos, float thick, Color color);                       // Draw a line (using triangles/quads)
+(cffi:defcfun ("DrawLineEx" draw-line-ex) :void
+  (start-pos (:struct %vector2))
+  (end-pos (:struct %vector2))
+  (thick :float)
+  (color (:struct %color)))
+
 ;; RLAPI void DrawLineStrip(const Vector2 *points, int pointCount, Color color);                            // Draw lines sequence (using gl lines)
+
 ;; RLAPI void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);                   // Draw line segment cubic-bezier in-out interpolation
 
 ;; RLAPI void DrawCircle(int centerX, int centerY, float radius, Color color);                              // Draw a color-filled circle
@@ -1722,6 +2022,11 @@
 ;; RLAPI void DrawCircleSectorLines(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color); // Draw circle sector outline
 ;; RLAPI void DrawCircleGradient(int centerX, int centerY, float radius, Color inner, Color outer);         // Draw a gradient-filled circle
 ;; RLAPI void DrawCircleV(Vector2 center, float radius, Color color);                                       // Draw a color-filled circle (Vector version)
+(cffi:defcfun ("DrawCircleV" draw-circle-v) :void
+  (center (:struct %vector2))
+  (radius :float)
+  (color (:struct %color)))
+
 ;; RLAPI void DrawCircleLines(int centerX, int centerY, float radius, Color color);                         // Draw circle outline
 ;; RLAPI void DrawCircleLinesV(Vector2 center, float radius, Color color);                                  // Draw circle outline (Vector version)
 ;; RLAPI void DrawEllipse(int centerX, int centerY, float radiusH, float radiusV, Color color);             // Draw ellipse
@@ -1753,8 +2058,21 @@
 ;; RLAPI void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);              // Draw rectangle with rounded edges
 ;; RLAPI void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, Color color);         // Draw rectangle lines with rounded edges
 ;; RLAPI void DrawRectangleRoundedLinesEx(Rectangle rec, float roundness, int segments, float lineThick, Color color); // Draw rectangle with rounded edges outline
-;; RLAPI void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                                // Draw a color-filled triangle (vertex in counter-clockwise order!)
+
+;; RLAPI void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                                // Draw a color-filled triangle (vertex in coun1ter-clockwise order!)
+(cffi:defcfun ("DrawTriangle" draw-triangle) :void
+  (v1 (:struct %vector2))
+  (v2 (:struct %vector2))
+  (v3 (:struct %vector2))
+  (color (:struct %color)))
+
 ;; RLAPI void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                           // Draw triangle outline (vertex in counter-clockwise order!)
+(cffi:defcfun ("DrawTriangleLines" draw-triangle-lines) :void
+  (v1 (:struct %vector2))
+  (v2 (:struct %vector2))
+  (v3 (:struct %vector2))
+  (color (:struct %color)))
+
 ;; RLAPI void DrawTriangleFan(const Vector2 *points, int pointCount, Color color);                          // Draw a triangle fan defined by points (first vertex is the center)
 ;; RLAPI void DrawTriangleStrip(const Vector2 *points, int pointCount, Color color);                        // Draw a triangle strip defined by points
 ;; RLAPI void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);               // Draw a regular polygon (Vector version)

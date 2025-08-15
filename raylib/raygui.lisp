@@ -5,7 +5,7 @@
   (:export #:gui-enable
 	   #:gui-disable
 	   #:with-gui
-	   #:gui-lock
+	   #:gui-lockb
 	   #:gui-unlock
 	   #:with-gui-lock
 	   #:gui-is-locked
