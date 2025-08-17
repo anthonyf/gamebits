@@ -2,6 +2,7 @@
   (:use #:cl)
   (:mix #:gamebits/raylib)
   (:export #:vector2-add
+	   #:vector2-sub
 	   #:vector2-scale
 	   #:vector2-normalize
 	   #:vector2-dot-product
@@ -15,6 +16,10 @@
 (defun vector2-add (v1 v2)
   (make-vector2 :x (+ (vector2-x v1) (vector2-x v2))
 		:y (+ (vector2-y v1) (vector2-y v2))))
+
+(defun vector2-sub (v1 v2)
+  (make-vector2 :x (- (vector2-x v1) (vector2-x v2))
+		:y (- (vector2-y v1) (vector2-y v2))))
 
 (defun vector2-scale (v scalar)
   (make-vector2 :x (* (vector2-x v) scalar)
