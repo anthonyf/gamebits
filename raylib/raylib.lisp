@@ -234,6 +234,8 @@
 	   #:draw-line-ex
 	   #:draw-circle
 	   #:draw-circle-v
+	   #:draw-circle-lines
+	   #:draw-circle-lines-v
 	   #:draw-rectangle-v
 	   #:draw-rectangle-rec
 	   #:draw-triangle
@@ -2029,7 +2031,18 @@
   (color (:struct %color)))
 
 ;; RLAPI void DrawCircleLines(int centerX, int centerY, float radius, Color color);                         // Draw circle outline
+(cffi:defcfun ("DrawCircleLines" draw-circle-lines) :void
+  (center-x :int)
+  (center-y :int)
+  (radius :float)
+  (color (:struct %color)))
+
 ;; RLAPI void DrawCircleLinesV(Vector2 center, float radius, Color color);                                  // Draw circle outline (Vector version)
+(cffi:defcfun ("DrawCircleLinesV" draw-circle-lines-v) :void
+  (center (:struct %vector2))
+  (radius :float)
+  (color (:struct %color)))
+
 ;; RLAPI void DrawEllipse(int centerX, int centerY, float radiusH, float radiusV, Color color);             // Draw ellipse
 ;; RLAPI void DrawEllipseV(Vector2 center, float radiusH, float radiusV, Color color);                      // Draw ellipse (Vector version)
 ;; RLAPI void DrawEllipseLines(int centerX, int centerY, float radiusH, float radiusV, Color color);        // Draw ellipse outline
