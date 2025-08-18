@@ -17,7 +17,7 @@
 	(sh "install libgl-dev"
 	    "sudo apt-get install libgl-dev")
 	(action "checkout raygui"
-		"actions/checkout@v2"
+		"actions/checkout@v4"
 		:repository "raysan5/raygui"
 		:path "raygui"
 		:ref "master")

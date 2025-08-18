@@ -8,7 +8,6 @@
 ;;; Load some code, ensuring that it's recompiled
 ;;; with the new optimization policy.
 (asdf:oos 'asdf:load-op :gamebits :force t)
-;;(asdf:oos 'asdf:load-op :gamebits/test :force t)
 
 ;;; Run the test suite.
 (fiveam:run! 'gamebits/test:gamebits-test)

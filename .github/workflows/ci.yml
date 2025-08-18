@@ -24,7 +24,7 @@
         },
         {
           "name": "checkout raygui",
-          "uses": "actions/checkout@v2",
+          "uses": "actions/checkout@v4",
           "with": {
             "repository": "raysan5/raygui",
             "path": "raygui",
