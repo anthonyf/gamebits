@@ -23,6 +23,7 @@
 	       (:module "examples"
 		:components ((:file "spinning-text")
 			     (:file "buttons")
+			     (:file "physics-1")
 			     (:file "examples"))))
   :in-order-to ((test-op (test-op :gamebits/test))))
 
