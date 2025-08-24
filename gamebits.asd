@@ -12,12 +12,12 @@
 	       #:livesupport
 	       #:cffi
 	       #:cffi-libffi)
-  :components ((:module "raylib"
-		:components ((:file "raylib")
-			     (:file "raygui")
-			     (:file "rlgl")))
-	       (:module "src"
-		:components ((:file "vector-math")
+  :components ((:module "src"
+		:components ((:module "raylib"
+			      :components ((:file "raylib")
+					   (:file "raygui")
+					   (:file "rlgl")))
+			     (:file "vector-math")
 			     (:file "physics2d")
 			     (:file "gamebits")))
 	       (:module "examples"
