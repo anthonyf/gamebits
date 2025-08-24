@@ -1618,12 +1618,13 @@
 (cffi:defcfun ("CloseWindow" close-window) :void)
 
 (defmacro with-window ((width height title &key (fps 60)) &body body)
-  `(progn
-     (set-target-fps ,fps)
-     (init-window ,width ,height ,title)
-     (unwind-protect
-	  (progn ,@body)
-       (close-window))))
+  `(#+darwin trivial-main-thread:with-body-in-main-thread #+darwin () #-darwin progn
+     (#+darwin float-features:with-float-traps-masked #+darwin (:overflow :invalid :divide-by-zero) #-darwin progn
+       (set-target-fps ,fps)
+       (init-window ,width ,height ,title)
+       (unwind-protect
+	    (progn ,@body)
+	 (close-window)))))
 
 
 ;; RLAPI bool WindowShouldClose(void);                               // Check if application should close (KEY_ESCAPE pressed or windows close icon clicked)

@@ -8,6 +8,8 @@
 	   #:vector2-dot-product
 	   #:vector2-from-angle
 	   #:vector2-magnitude
+	   #:vector2-length
+	   #:vector2-length-squared
 	   #:rad2deg
 	   #:deg2rad))
 
@@ -44,6 +46,14 @@
 (defun vector2-magnitude (v)
   (sqrt (+ (expt (vector2-x v) 2)
 	   (expt (vector2-y v) 2))))
+
+(defun vector2-length (v)
+  (sqrt (+ (expt (vector2-x v) 2)
+	   (expt (vector2-y v) 2))))
+
+(defun vector2-length-squared (v)
+  (+ (expt (vector2-x v) 2)
+     (expt (vector2-y v) 2)))
 
 (defun rad2deg (rad)
   (coerce (float (* rad (/ 180.0 pi)))

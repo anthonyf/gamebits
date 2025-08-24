@@ -4,3 +4,4 @@
 *.fas
 *~
 /coverage/
+/vendored/*
