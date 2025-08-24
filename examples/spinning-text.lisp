@@ -26,23 +26,10 @@
       )))
 
 (defun spinning-text ()
-  (float-features:with-float-traps-masked (:overflow :invalid :divide-by-zero)
-    (with-window (800 600 "Spinning Text Example")
-      (with-font (*default-font* (namestring (asdf:system-relative-pathname :gamebits "Roboto/static/Roboto-Regular.ttf")))
-	;;(setf *default-font* (get-font-default))
-	(loop :until (window-should-close)
-	      :do (livesupport:continuable 
-		    (funcall 'update))
-		  (livesupport:update-repl-link))))))
-
-
-(defun test ()
-  (float-features:with-float-traps-masked (:overflow :invalid :divide-by-zero)
-    (load-font-ex 
-     (namestring
-      (asdf/system:system-relative-pathname
-       :gamebits
-       "Roboto/static/Roboto-Regular.ttf"))
-     50
-     (cffi:null-pointer)
-     0)))
+  (with-window (800 600 "Spinning Text Example")
+    (with-font (*default-font* (namestring (asdf:system-relative-pathname :gamebits "Roboto/static/Roboto-Regular.ttf")))
+      ;;(setf *default-font* (get-font-default))
+      (loop :until (window-should-close)
+	    :do (livesupport:continuable 
+		  (funcall 'update))
+		(livesupport:update-repl-link)))))

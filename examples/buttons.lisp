@@ -16,10 +16,9 @@
 	 (format t "Checkbox Toggled! ~A~%" toggled)))))
 
 (defun buttons()
-  (float-features:with-float-traps-masked (:overflow :invalid :divide-by-zero)
-    (with-window (800 600 "Buttons Example")
-      (gui-set-font (get-font-default))
-      (gui-set-style +DEFAULT+ +TEXT-SIZE+ 20)
-      (loop :until (window-should-close)
-	    do (livesupport:continuable
-		 (funcall 'update))))))
+  (with-window (800 600 "Buttons Example")
+    (gui-set-font (get-font-default))
+    (gui-set-style +DEFAULT+ +TEXT-SIZE+ 20)
+    (loop :until (window-should-close)
+	  do (livesupport:continuable
+	       (funcall 'update)))))
