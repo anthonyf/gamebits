@@ -206,6 +206,7 @@
 	   #:window-should-close
 
 	   #:set-target-fps
+	   #:get-time
 	   #:get-fps
 	   #:get-frame-time
 	   	   
@@ -231,6 +232,7 @@
 	   #:is-mouse-button-released
 
 	   #:draw-line
+	   #:draw-line-v
 	   #:draw-line-ex
 	   #:draw-circle
 	   #:draw-circle-v
@@ -1618,13 +1620,15 @@
 (cffi:defcfun ("CloseWindow" close-window) :void)
 
 (defmacro with-window ((width height title &key (fps 60)) &body body)
-  `(#+darwin trivial-main-thread:with-body-in-main-thread #+darwin () #-darwin progn
-     (#+darwin float-features:with-float-traps-masked #+darwin (:overflow :invalid :divide-by-zero) #-darwin progn
-       (set-target-fps ,fps)
+  (alexandria:once-only (width height title fps)
+    `(#+darwin trivial-main-thread:with-body-in-main-thread #+darwin () #-darwin progn
+      (#+darwin float-features:with-float-traps-masked #+darwin (:overflow :invalid :divide-by-zero) #-darwin progn
+       (when ,fps
+	 (set-target-fps ,fps))
        (init-window ,width ,height ,title)
        (unwind-protect
 	    (progn ,@body)
-	 (close-window)))))
+	 (close-window))))))
 
 
 ;; RLAPI bool WindowShouldClose(void);                               // Check if application should close (KEY_ESCAPE pressed or windows close icon clicked)
@@ -1776,6 +1780,7 @@
 
 
 ;; RLAPI double GetTime(void);                                       // Get elapsed time in seconds since InitWindow()
+(cffi:defcfun ("GetTime" get-time) :double)
 
 ;; RLAPI int GetFPS(void);                                           // Get current FPS
 (cffi:defcfun ("GetFPS" get-fps) :int)
@@ -2003,6 +2008,10 @@
   (color (:struct %color)))
 
 ;; RLAPI void DrawLineV(Vector2 startPos, Vector2 endPos, Color color);                                     // Draw a line (using gl lines)
+(cffi:defcfun ("DrawLineV" draw-line-v) :void
+  (start-pos (:struct %vector2))
+  (end-pos (:struct %vector2))
+  (color (:struct %color)))
 
 ;; RLAPI void DrawLineEx(Vector2 startPos, Vector2 endPos, float thick, Color color);                       // Draw a line (using triangles/quads)
 (cffi:defcfun ("DrawLineEx" draw-line-ex) :void

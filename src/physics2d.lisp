@@ -11,7 +11,8 @@
 	   #:distance
 	   #:circle
 	   #:circle-vs-circle
-	   ))
+	   #:draw-bodies
+	   #:physics-main-loop))
 
 (in-package #:gamebits/physics2d)
 
@@ -44,7 +45,6 @@
   (penetration 0.0 :type float)
   (normal (make-vector2 :x 0 :y 0) :type vector2))
 
-
 (defstruct material
   (friction 0.5 :type float)
   (restitution 0.5 :type float)
@@ -75,9 +75,22 @@
 (defclass shape ()
   ())
 
+(defgeneric draw-shape (shape)
+  (:documentation "Draw the given shape."))
+
 (defclass circle (shape)
   ((center :accessor circle-center :initarg :center :type vector2)
    (radius :accessor circle-radius :initarg :radius :type float)))
+
+(defmethod draw-shape ((circle circle))
+  (draw-circle-lines-v (circle-center circle)
+		       (circle-radius circle)
+		       +green+)
+  (draw-line-v (circle-center circle)
+	       (vector2-add (circle-center circle)
+			    (make-vector2 :x (circle-radius circle)
+					  :y 0))
+	       +red+))
 
 (defclass circle-body (body circle)
   ())
@@ -122,13 +135,6 @@ a list of body pairs that may be colliding."
 	when (and (aabb-vs-aabb a-aabb b-aabb)
 		  (matching-layers-p a b))
 	  collect (cons a b)))
-
-(defun process-physics (bodies)
-  (let ((potential-collisions (broad-phase-collision-detection bodies)))
-    (loop for (body-a . body-b) in potential-collisions
-	  for manifold = (collide body-a body-b)
-	  when manifold
-	    do (resolve-collision manifold))))
 
 (defgeneric collide (body-a body-b)
   (:documentation "Check for collision between two bodies and return a manifold if they are colliding."))
@@ -177,3 +183,46 @@ a list of body pairs that may be colliding."
     ;; update positions
     (move-body body-a move-a)
     (move-body body-b move-b)))
+
+(defparameter *bodies* nil
+  "A global list of bodies in the physics simulation.")
+
+(defun process-physics ()
+  (let ((potential-collisions (broad-phase-collision-detection *bodies*)))
+    (loop for (body-a . body-b) in potential-collisions
+	  for manifold = (collide body-a body-b)
+	  when manifold
+	    do (resolve-collision manifold))))
+
+(defun draw-bodies ()
+  (dolist (body *bodies*)
+    (draw-shape body)))
+
+(defun physics-main-loop (height width title &key render-fn update-physics-fn (fps 60))
+  (with-window (height width title :fps nil)
+    (let ((dt (/ 1.0 fps))
+	  (accumulator 0.0))
+      (let ((frame-start (get-time)))
+	(loop :until (window-should-close)
+	      :for current-time = (get-time)
+	      :do (progn
+		    ;; Store the time elapsed since the last frame began
+		    (incf accumulator (- current-time frame-start))
+		    ;; Record the starting of this frame
+		    (setf frame-start current-time)
+		    
+		    ;; Clamp accumulator to avoid spiral of death
+		    (when (> accumulator 0.2)
+		      (setf accumulator 0.2))
+		    
+		    (loop :while (> accumulator dt)
+			  :do (livesupport:continuable
+				(process-physics)
+				(when update-physics-fn
+				  (funcall update-physics-fn dt))
+				(decf accumulator dt)))
+		  
+		    (let ((alpha (/ accumulator dt)))
+		      (when render-fn
+			(livesupport:continuable
+			  (funcall render-fn alpha))))))))))

@@ -5,14 +5,13 @@
 
 (in-package #:gamebits/examples/physics-1)
 
-(defun update ()
+(defun render (alpha)
   (with-drawing ()
-    (clear-background +white+)))
+    (clear-background +white+)
+    (draw-bodies)))
 
 (defun physics-1 ()
-  (with-window (800 600 "Physics 1 Example")
-    (loop :until (window-should-close)
-	  :do (livesupport:continuable
-		(funcall 'update))
-	      (livesupport:update-repl-link))))
+  (physics-main-loop 800 600 "Physics Example 1"
+		     :render-fn 'render)
+		     :fps 60)
 
