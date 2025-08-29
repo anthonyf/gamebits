@@ -58,16 +58,16 @@
 ;; Pillow     Density : 0.1  Restitution : 0.2
 ;; Static     Density : 0.0  Restitution : 0.4
 
-(defstruct mass-data
-  (mass 1.0 :type float)
-  (inverse-mass 1.0 :type float)
-  (inertia 1.0 :type float)
-  (inverse-inertia 1.0 :type float))
-
 (defclass body ()
   ((transform :accessor transform :initarg :transform)
    (material :accessor material :initarg :material :type material)
-   (mass-data :accessor mass-data :initarg :mass-data :type mass-data)
+
+   ;; mass properties
+   (mass :initform 1.0 :type float)
+   (inverse-mass :initform 1.0 :type float)
+   (inertia :initform 1.0 :type float)
+   (inverse-inertia :initform 1.0 :type float)
+   
    (velocity :accessor velocity :initarg :velocity :type vector2)
    (force :accessor force :initarg :force :type vector2)
    (gravity-scale :accessor gravity-scale :initarg :gravity-scale :type float)))
