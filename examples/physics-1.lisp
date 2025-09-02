@@ -6,6 +6,7 @@
 (in-package #:gamebits/examples/physics-1)
 
 (defun render (alpha)
+  (declare (ignore alpha))
   (with-drawing ()
     (clear-background +white+)
     (draw-bodies)))

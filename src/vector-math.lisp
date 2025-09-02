@@ -31,7 +31,7 @@
   (let ((length (sqrt (+ (expt (vector2-x v) 2)
 			 (expt (vector2-y v) 2)))))
     (if (zerop length)
-	(make-vector2 :x 0 :y 0)
+	(make-vector2 :x 0.0 :y 0.0)
 	(make-vector2 :x (/ (vector2-x v) length)
 		      :y (/ (vector2-y v) length)))))
 

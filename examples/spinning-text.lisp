@@ -20,7 +20,7 @@
 	 (origin (make-vector2 :x (/ (vector2-x text-size) 2) :y (/ (vector2-y text-size) 2))))
     (with-drawing ()
       (clear-background +white+)
-      (draw-text-pro *default-font* text (make-vector2 :x 400 :y 300)
+      (draw-text-pro *default-font* text (make-vector2 :x 400.0 :y 300.0)
 		     origin *rotation* font-size font-spacing +blue+)
       (incf *rotation* (* 90 delta-time 0.5))
       )))
