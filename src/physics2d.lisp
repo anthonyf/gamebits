@@ -17,8 +17,8 @@
 (in-package #:gamebits/physics2d)
 
 (defstruct aabb 
-  (min (make-vector2 :x 0 :y 0) :type vector2)
-  (max (make-vector2 :x 0 :y 0) :type vector2))
+  (min (make-vector2 :x 0.0 :y 0.0) :type vector2)
+  (max (make-vector2 :x 0.0 :y 0.0) :type vector2))
 
 (defun aabb-vs-aabb (aabb1 aabb2)
   (and (<= (vector2-x (aabb-min aabb1)) (vector2-x (aabb-max aabb2)))
@@ -43,7 +43,7 @@
   body-a
   body-b
   (penetration 0.0 :type float)
-  (normal (make-vector2 :x 0 :y 0) :type vector2))
+  (normal (make-vector2 :x 0.0 :y 0.0) :type vector2))
 
 (defstruct material
   (friction 0.5 :type float)
@@ -89,7 +89,7 @@
   (draw-line-v (circle-center circle)
 	       (vector2-add (circle-center circle)
 			    (make-vector2 :x (circle-radius circle)
-					  :y 0))
+					  :y 0.0))
 	       +red+))
 
 (defclass circle-body (body circle)
