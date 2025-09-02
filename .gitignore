@@ -3,4 +3,6 @@
 .DS_Store
 *.fas
 *~
-/coverage/
+/vendored/*
++/.qlot/
+x
