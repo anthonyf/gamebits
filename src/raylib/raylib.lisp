@@ -36,6 +36,9 @@
 	   #:%rectangle #:rectangle #:make-rectangle #:rectangle-x #:rectangle-y
 	   #:rectangle-width #:rectangle-height
 
+	   #:texture #:make-texture #:texture-id #:texture-width #:texture-height
+
+	   #:npatchinfo #:npatchinfo-source #:npatchinfo-left #:top #:npatchinfo-right #:npatchinfo-bottom #:npatchinfo-layout
 
 	   #:%font #:font
 	   #:get-font-default
@@ -243,6 +246,13 @@
 	   #:draw-rectangle-rec
 	   #:draw-triangle
 	   #:draw-triangle-lines
+
+	   #:draw-texture
+	   #:draw-texture-v
+	   #:draw-texture-ex
+	   #:draw-texture-rec
+	   #:draw-texture-pro
+	   #:draw-texture-npatch
 	   
 	   ))
 
@@ -655,6 +665,7 @@
 ;;     int mipmaps;            // Mipmap levels, 1 by default
 ;;     int format;             // Data format (PixelFormat type)
 ;; } Texture;
+
 (cffi:defcstruct %texture
   (id :uint)
   (width :int)
@@ -720,6 +731,41 @@
 ;;     int bottom;             // Bottom border offset
 ;;     int layout;             // Layout of the n-patch: 3x3, 1x3 or 3x1
 ;; } NPatchInfo;
+
+(cffi:defcstruct %npatchinfo
+  (source (:struct %rectangle)) ; Texture source rectangle
+  (left :int)                  ; Left border offset
+  (top :int)                   ; Top border offset
+  (right :int)                 ; Right border offset
+  (bottom :int)                ; Bottom border offset
+  (layout :int))               ; Layout of the n-patch: 3x3, 1x3 or 3x1
+
+(defstruct npatchinfo
+  (source 'rectangle)
+  (left :int)
+  (top :int)
+  (right :int)
+  (bottom :int)
+  (layout :int))
+
+(defmethod cffi:translate-into-foreign-memory
+    ((value npatchinfo)
+     (type %npatchinfo-tclass)
+     pointer)
+  (cffi:with-foreign-slots ((source left top right bottom layout) pointer (:struct %npatchinfo))
+    (with-slots ((npatchinfo-source source)
+		 (npatchinfo-left left)
+		 (npatchinfo-top top)
+		 (npatchinfo-right right)
+		 (npatchinfo-bottom bottom)
+		 (npatchinfo-layout layout))
+  	value
+      (setf source (cffi:convert-to-foreign npatchinfo-source '(:struct %rectangle)))
+      (setf left npatchinfo-left)
+      (setf top npatchinfo-top)
+      (setf right npatchinfo-right)
+      (setf bottom npatchinfo-bottom)
+      (setf layout npatchinfo-layout))))
 
 ;; // GlyphInfo, font characters glyphs info
 ;; typedef struct GlyphInfo {
@@ -2247,11 +2293,45 @@
 
 ;; // Texture drawing functions
 ;; RLAPI void DrawTexture(Texture2D texture, int posX, int posY, Color tint);                               // Draw a Texture2D
+(cffi:defcfun ("DrawTexture" draw-texture) :void
+  (texture (:struct %texture))
+  (pos-x :int)
+  (pos-y :int)
+  (tint (:struct %color)))
 ;; RLAPI void DrawTextureV(Texture2D texture, Vector2 position, Color tint);                                // Draw a Texture2D with position defined as Vector2
+(cffi:defcfun ("DrawTextureV" draw-texture-v) :void
+  (texture (:struct %texture))
+  (position (:struct %vector2))
+  (tint (:struct %color)))
 ;; RLAPI void DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint);  // Draw a Texture2D with extended parameters
+(cffi:defcfun ("DrawTextureEx" draw-texture-ex) :void
+  (texture (:struct %texture))
+  (position (:struct %vector2))
+  (rotation :float)
+  (scale :float)
+  (tint (:struct %color)))
 ;; RLAPI void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint);            // Draw a part of a texture defined by a rectangle
+(cffi:defcfun ("DrawTextureRec" draw-texture-rec) :void
+  (texture (:struct %texture))
+  (source (:struct %rectangle))
+  (position (:struct %vector2))
+  (tint (:struct %color)))
 ;; RLAPI void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint); // Draw a part of a texture defined by a rectangle with 'pro' parameters
+(cffi:defcfun ("DrawTexturePro" draw-texture-pro) :void
+  (texture (:struct %texture))
+  (source (:struct %rectangle))
+  (dest (:struct %rectangle))
+  (origin (:struct %vector2))
+  (rotation :float)
+  (tint (:struct %color)))
 ;; RLAPI void DrawTextureNPatch(Texture2D texture, NPatchInfo nPatchInfo, Rectangle dest, Vector2 origin, float rotation, Color tint); // Draws a texture (or part of it) that stretches or shrinks nicely
+(cffi:defcfun ("DrawTextureNPatch" draw-texture-npatch) :void
+  (texture (:struct %texture))
+  (npatch-info (:struct %npatchinfo))
+  (dest (:struct %rectangle))
+  (origin (:struct %vector2))
+  (rotation :float)
+  (tint (:struct %color)))
 
 ;; // Color/pixel related functions
 ;; RLAPI bool ColorIsEqual(Color col1, Color col2);                            // Check if two colors are equal
