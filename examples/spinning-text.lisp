@@ -30,6 +30,7 @@
     (with-font (*default-font* (namestring (asdf:system-relative-pathname :gamebits "Roboto/static/Roboto-Regular.ttf")))
       ;;(setf *default-font* (get-font-default))
       (loop :until (window-should-close)
-	    :do (livesupport:continuable 
-		  (funcall 'update))
-		(livesupport:update-repl-link)))))
+	    :do (progn
+		  (livesupport:continuable 
+		    (funcall 'update))
+		  (livesupport:update-repl-link))))))
