@@ -2,7 +2,7 @@
 
 (asdf:defsystem #:gamebits
   :description "Describe gamebits here"
-  :author "Your Name <your.name@example.com>"
+  :author "Anthony Fairchild <fairchild.anthony@gmail.com>"
   :license  "Specify license here"
   :version "0.0.1"
   :serial t
@@ -19,17 +19,28 @@
 					   (:file "rlgl")))
 			     (:file "vector-math")
 			     (:file "physics2d")
-			     (:file "gamebits")))
-	       (:module "examples"
+			     (:file "gamebits"))))
+  :in-order-to ((test-op (test-op :gamebits/test))))
+
+
+(asdf:defsystem #:gamebits/examples
+  :description "Examples for gamebits"
+  :author "Anthony Fairchild <fairchild.anthony@gmail.com>"
+  :license "Specify license here"
+  :version "0.0.1"
+  :serial t
+  :depends-on (#:gamebits)
+  :components ((:module "examples"
 		:components ((:file "spinning-text")
 			     (:file "buttons")
 			     (:file "physics-1")
-			     (:file "examples"))))
-  :in-order-to ((test-op (test-op :gamebits/test))))
+			     (:file "examples")))))
 
 (asdf:defsystem #:gamebits/test
   :description "Test suite for gamebits"
-  :author "Your Name <"
+  :author "Anthony Fairchild <fairchild.anthony@gmail.com>"
+  :license "Specify license here"
+  :version "0.0.1"
   :depends-on (#:gamebits
 	       #:fiveam)
   :serial t
