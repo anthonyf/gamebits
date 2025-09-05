@@ -31,10 +31,11 @@
 
 	   #:get-color
 	   
-	   #:%vector #:vector2 #:make-vector2 :vector2-x :vector2-y
+	   #:%vector2 #:vector2 #:make-vector2 #:vector2-x #:vector2-y
 
-	   #:%rectangle #:rectangle #:make-rectangle :rectangle-x :rectangle-y
-	   :rectangle-width :rectangle-height
+	   #:%rectangle #:rectangle #:make-rectangle #:rectangle-x #:rectangle-y
+	   #:rectangle-width #:rectangle-height
+
 
 	   #:%font #:font
 	   #:get-font-default
@@ -661,12 +662,12 @@
   (mipmaps :int)
   (format :int))
 
-(defclass texture ()
-  ((id :initarg :id)
-   (width :initarg :width)
-   (height :initarg :height)
-   (mipmaps :initarg :mipmaps)
-   (format :initarg :format)))
+(defstruct texture
+  (id :int)
+  (width :int)
+  (height :int)
+  (mipmaps :int)
+  (format :int))
 
 (defmethod cffi:translate-into-foreign-memory 
     ((value texture)
@@ -688,12 +689,11 @@
 (defmethod cffi:translate-from-foreign 
     (pointer (type %texture-tclass))
   (cffi:with-foreign-slots ((id width height mipmaps format) pointer (:struct %texture))
-    (make-instance 'texture
-		   :id id
-		   :width width
-		   :height height
-		   :mipmaps mipmaps
-		   :format format)))
+    (make-texture :id id
+		  :width width
+		  :height height
+		  :mipmaps mipmaps
+		  :format format)))
 
 ;; // Texture2D, same as Texture
 ;; typedef Texture Texture2D;
@@ -753,13 +753,13 @@
   (recs :pointer) ; Assuming recs is a pointer to some structure
   (glyphs (:pointer (:struct %glyph-info)))) ; Assuming glyphs is a pointer to some structure
 
-(defclass font ()
-  ((base-size :initarg :base-size :accessor base-size)
-   (glyph-count :initarg :glyph-count :accessor glyph-count)
-   (glyph-padding :initarg :glyph-padding :accessor glyph-padding)
-   (texture :initarg :texture :accessor texture :type texture)
-   (recs :initarg :recs :accessor recs)
-   (glyphs :initarg :glyphs :accessor glyphs)))
+(defstruct font
+  (base-size :int)
+  (glyph-count :int)
+  (glyph-padding :int)
+  (texture 'texture)
+  (recs :pointer)
+  (glyphs :int))
 
 (defmethod cffi:translate-into-foreign-memory
     ((value font)
@@ -784,13 +784,12 @@
 (defmethod cffi:translate-from-foreign 
     (pointer (type %font-tclass))
   (cffi:with-foreign-slots ((base-size glyph-count glyph-padding texture recs glyphs) pointer (:struct %font))
-    (make-instance 'font
-		   :base-size base-size
-		   :glyph-count glyph-count
-		   :glyph-padding glyph-padding
-		   :texture (cffi:translate-from-foreign texture '(:struct %texture))
-		   :recs recs
-		   :glyphs glyphs)))
+    (make-font :base-size base-size
+	       :glyph-count glyph-count
+	       :glyph-padding glyph-padding
+	       :texture (cffi:translate-from-foreign texture '(:struct %texture))
+	       :recs recs
+	       :glyphs glyphs)))
 
 
 ;; // Camera, defines position/orientation in 3d space
