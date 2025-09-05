@@ -34,6 +34,7 @@
 		:components ((:file "spinning-text")
 			     (:file "buttons")
 			     (:file "physics-1")
+			     (:file "transforms")
 			     (:file "examples")))))
 
 (asdf:defsystem #:gamebits/test
