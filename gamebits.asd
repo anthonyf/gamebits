@@ -17,6 +17,7 @@
 			      :components ((:file "raylib")
 					   (:file "raygui")
 					   (:file "rlgl")))
+			     (:file "sprite")
 			     (:file "vector-math")
 			     (:file "physics2d")
 			     (:file "gamebits"))))
@@ -35,6 +36,7 @@
 			     (:file "buttons")
 			     (:file "physics-1")
 			     (:file "transforms")
+			     (:file "textures")
 			     (:file "examples")))))
 
 (asdf:defsystem #:gamebits/test

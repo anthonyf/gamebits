@@ -5,7 +5,7 @@
 		 #:gamebits/examples/buttons
 		 #:gamebits/examples/physics-1
 		 #:gamebits/examples/transforms
-		 )
+		 #:gamebits/examples/textures)
   (:export ))
 
 (in-package #:gamebits/examples)
