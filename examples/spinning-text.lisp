@@ -32,5 +32,5 @@
       (loop :until (window-should-close)
 	    :do (progn
 		  (livesupport:continuable 
-		    (funcall 'update))
+		    (update))
 		  (livesupport:update-repl-link))))))

@@ -21,4 +21,4 @@
     (gui-set-style +DEFAULT+ +TEXT-SIZE+ 20)
     (loop :until (window-should-close)
 	  :do (livesupport:continuable
-	       (funcall 'update)))))
+		(update)))))
