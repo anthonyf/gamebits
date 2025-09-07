@@ -247,6 +247,11 @@
 	   #:draw-triangle
 	   #:draw-triangle-lines
 
+	   #:load-texture
+	   #:load-texture-from-image
+	   #:is-texture-valid
+	   #:unload-texture
+	   
 	   #:draw-texture
 	   #:draw-texture-v
 	   #:draw-texture-ex
@@ -2276,11 +2281,25 @@
 ;; // Texture loading functions
 ;; // NOTE: These functions require GPU access
 ;; RLAPI Texture2D LoadTexture(const char *fileName);                                                       // Load texture from file into GPU memory (VRAM)
+(cffi:defcfun ("LoadTexture" load-texture) (:struct %texture)
+  (file-name :string))
+
 ;; RLAPI Texture2D LoadTextureFromImage(Image image);                                                       // Load texture from image data
+(cffi:defcfun ("LoadTextureFromImage" load-texture-from-image) (:struct %texture)
+  (image (:struct %image)))
+
 ;; RLAPI TextureCubemap LoadTextureCubemap(Image image, int layout);                                        // Load cubemap from image, multiple image cubemap layouts supported
+
 ;; RLAPI RenderTexture2D LoadRenderTexture(int width, int height);                                          // Load texture for rendering (framebuffer)
+
 ;; RLAPI bool IsTextureValid(Texture2D texture);                                                            // Check if a texture is valid (loaded in GPU)
+(cffi:defcfun ("IsTextureValid" is-texture-valid) :bool
+  (texture (:struct %texture)))
+
 ;; RLAPI void UnloadTexture(Texture2D texture);                                                             // Unload texture from GPU memory (VRAM)
+(cffi:defcfun ("UnloadTexture" unload-texture) :void
+  (texture (:struct %texture)))
+
 ;; RLAPI bool IsRenderTextureValid(RenderTexture2D target);                                                 // Check if a render texture is valid (loaded in GPU)
 ;; RLAPI void UnloadRenderTexture(RenderTexture2D target);                                                  // Unload render texture from GPU memory (VRAM)
 ;; RLAPI void UpdateTexture(Texture2D texture, const void *pixels);                                         // Update GPU texture with new data (pixels should be able to fill texture)
