@@ -13,12 +13,14 @@
 	       #:cffi-libffi)
   :components ((:module "src"
 		:components ((:file "vector2")
+			     (:file "rectangle")
 			     (:module "raylib"
 			      :components ((:file "raylib")
 					   (:file "raygui")
 					   (:file "rlgl")))
 			     (:file "sprite")
 			     (:file "vector-math")
+			     (:file "matrix-math")
 			     (:file "physics2d")
 			     (:file "gamebits"))))
   :in-order-to ((test-op (test-op :gamebits/test))))

@@ -1,7 +1,8 @@
 ;; raylib.lisp
 (uiop:define-package #:gamebits/raylib
   (:use #:cl)
-  (:use #:gamebits/vector2)
+  (:mix #:gamebits/vector2
+	#:gamebits/rectangle)
   (:export #:%color #:color #:make-color :color-r :color-g :color-b :color-a
 	   #:+lightgray+
 	   #:+gray+
@@ -34,8 +35,7 @@
 	   
 	   #:%vector2
 
-	   #:%rectangle #:rectangle #:make-rectangle #:rectangle-x #:rectangle-y
-	   #:rectangle-width #:rectangle-height
+	   #:%rectangle
 
 	   #:texture #:make-texture #:texture-id #:texture-width #:texture-height
 
@@ -627,8 +627,6 @@
   (y :float)
   (width :float)
   (height :float))
-
-(defstruct rectangle (x :float) (y :float) (width :float) (height :float))
 
 (defmethod cffi:translate-into-foreign-memory
     ((value rectangle)

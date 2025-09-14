@@ -7,8 +7,6 @@
   (:export #:aabb
 	   #:aabb-vs-aabb
 	   #:aabb-contains-point
-	   #:distance-squared
-	   #:distance
 	   #:circle
 	   #:circle-vs-circle
 	   #:draw-bodies
@@ -31,13 +29,6 @@
        (>= (vector2-x (aabb-max aabb)) (vector2-x point))
        (<= (vector2-y (aabb-min aabb)) (vector2-y point))
        (>= (vector2-y (aabb-max aabb)) (vector2-y point))))
-
-(defun distance-squared (p1 p2)
-  (+ (expt (- (vector2-x p1) (vector2-x p2)) 2)
-     (expt (- (vector2-y p1) (vector2-y p2)) 2)))
-
-(defun distance (p1 p2)
-  (sqrt (distance-squared p1 p2)))
 
 (defstruct manifold
   body-a

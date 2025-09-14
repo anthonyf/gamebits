@@ -11,6 +11,8 @@
 	   #:vector2-length
 	   #:vector2-length-squared
 	   #:rad2deg
+	   #:distance
+	   #:distance-squared
 	   #:deg2rad))
 
 (in-package #:gamebits/vector-math)
@@ -54,6 +56,13 @@
 (defun vector2-length-squared (v)
   (+ (expt (vector2-x v) 2)
      (expt (vector2-y v) 2)))
+
+(defun distance-squared (p1 p2)
+  (+ (expt (- (vector2-x p1) (vector2-x p2)) 2)
+     (expt (- (vector2-y p1) (vector2-y p2)) 2)))
+
+(defun distance (p1 p2)
+  (sqrt (distance-squared p1 p2)))
 
 (defun rad2deg (rad)
   (coerce (float (* rad (/ 180.0 pi)))

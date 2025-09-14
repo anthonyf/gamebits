@@ -1,7 +1,9 @@
 (uiop:define-package #:gamebits/examples/transforms
   (:use #:cl)
   (:mix #:gamebits/raylib
-	#:gamebits/rlgl)
+	#:gamebits/vector2
+	#:gamebits/vector-math
+	#:gamebits/matrix-math)
   (:export #:transforms))
 
 (in-package #:gamebits/examples/transforms)
@@ -10,8 +12,17 @@
 (defparameter *screen-height* 600)
 
 (defun draw-base-shape ()
-  (draw-circle-lines 0 0 50.0 +black+)
-  (draw-line 0 0 50 0 +red+))
+  (let ((center (transform-vector2 (make-vector2 :x 0 :y 0)))
+	(line-point (transform-vector2 (make-vector2 :x 50 :y 0))))
+    (draw-circle-lines (round (vector2-x center))
+		       (round (vector2-y center))
+		       (distance line-point center)
+		       +black+)
+    (draw-line (round (vector2-x center))
+	       (round (vector2-y center))
+	       (round (vector2-x line-point))
+	       (round (vector2-y line-point))
+	       +red+)))
 
 (defparameter *rotations* (list 0.0 0.0 0.0 0.0))
 (defparameter *speeds* (list 100.0 -200.0 300.0 -400.0))
@@ -24,19 +35,17 @@
 
 (defun draw-shapes (rotations)
   (when rotations
-    (with-matrix-push ()
-      (rl-rotatef (car rotations) 0.0 0.0 1.0)
+    (with-current-transform (:theta (deg2rad (car rotations)))
       (draw-base-shape)
-      (rl-translatef 150.0 0.0 0.0)
-      (rl-scalef 0.5 0.5 1.0)
-      (draw-shapes (cdr rotations)))))
+      (with-current-transform (:tx 150.0 :ty 0.0 :sx 0.5 :sy 0.5)
+	(draw-shapes (cdr rotations))))))
 
 (defun update ()
   (with-drawing ()
     (clear-background +white+)
     (update-rotations)
-    (with-matrix-push
-      (rl-translatef (/ *screen-width* 2.0) (/ *screen-height* 2.0) 0.0)
+    (with-current-transform (:tx (/ *screen-width* 2.0)
+			     :ty (/ *screen-height* 2.0))
       (draw-shapes *rotations*))
     (draw-fps 10 10)))
 
