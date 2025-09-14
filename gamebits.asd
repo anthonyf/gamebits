@@ -1,5 +1,4 @@
 ;;;; gamebits.asd
-
 (asdf:defsystem #:gamebits
   :description "Describe gamebits here"
   :author "Anthony Fairchild <fairchild.anthony@gmail.com>"
@@ -13,7 +12,8 @@
 	       #:cffi
 	       #:cffi-libffi)
   :components ((:module "src"
-		:components ((:module "raylib"
+		:components ((:file "vector2")
+			     (:module "raylib"
 			      :components ((:file "raylib")
 					   (:file "raygui")
 					   (:file "rlgl")))

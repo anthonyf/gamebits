@@ -1,6 +1,7 @@
 (uiop:define-package #:gamebits/examples/spinning-text
   (:use #:cl)
-  (:mix #:gamebits)
+  (:mix #:gamebits/vector2
+	#:gamebits/raylib)
   (:export #:spinning-text))
 
 (in-package #:gamebits/examples/spinning-text)

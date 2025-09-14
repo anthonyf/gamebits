@@ -1,6 +1,7 @@
 (uiop:define-package #:gamebits/examples/textures
   (:use #:cl)
-  (:mix #:gamebits/raylib
+  (:mix #:gamebits/vector2
+	#:gamebits/raylib
 	#:gamebits/sprite)
   (:export #:run-texture-example))
 

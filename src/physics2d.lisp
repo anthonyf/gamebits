@@ -2,7 +2,7 @@
 
 (uiop:define-package #:gamebits/physics2d
   (:use #:cl)
-  (:mix #:gamebits/raylib
+  (:mix #:gamebits/vector2
 	#:gamebits/vector-math)
   (:export #:aabb
 	   #:aabb-vs-aabb

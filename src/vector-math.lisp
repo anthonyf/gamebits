@@ -1,6 +1,6 @@
 (uiop:define-package #:gamebits/vector-math
   (:use #:cl)
-  (:mix #:gamebits/raylib)
+  (:mix #:gamebits/vector2)
   (:export #:vector2-add
 	   #:vector2-sub
 	   #:vector2-scale
