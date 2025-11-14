@@ -17,11 +17,15 @@
 			     (:module "raylib"
 			      :components ((:file "raylib")
 					   (:file "raygui")
-					   (:file "rlgl")))
+					   (:file "rlgl")
+					   (:file "raymath")))
 			     (:file "sprite")
 			     (:file "vector-math")
 			     (:file "matrix-math")
-			     (:file "physics2d")
+ 			     (:file "physics2d")
+			     (:module "physics2d"
+			      :components ((:file "aabb")
+					   (:file "collision-shape")))
 			     (:file "gamebits"))))
   :in-order-to ((test-op (test-op :gamebits/test))))
 
@@ -36,6 +40,7 @@
   :components ((:module "examples"
 		:components ((:file "spinning-text")
 			     (:file "buttons")
+			     (:file "collision-test")
 			     (:file "physics-1")
 			     (:file "transforms")
 			     (:file "textures")
